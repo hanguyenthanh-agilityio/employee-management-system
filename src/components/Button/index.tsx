@@ -12,7 +12,8 @@ type ButtonProps = {
     | 'success'
     | 'error'
     | 'info'
-    | 'warning';
+    | 'warning'
+    | 'danger';
   customClass?: string;
   name?: string;
   value?: string;
@@ -39,12 +40,10 @@ export const Button = ({
 
   switch (variant) {
     case 'primary':
-      stateClass =
-        'bg-blue-500 text-white hover:bg-blue-600 disabled:bg-blue-300';
+      stateClass = 'bg-[#0A278F] text-white hover:bg-[#0c2f9e]';
       break;
     case 'secondary':
-      stateClass =
-        'bg-gray-400 text-white hover:bg-gray-500 disabled:bg-gray-300';
+      stateClass = 'bg-gray-100 text-gray-800 hover:bg-gray-200';
       break;
     case 'success':
       stateClass =
@@ -59,8 +58,10 @@ export const Button = ({
         'bg-rose-500 text-white hover:bg-rose-600 disabled:bg-rose-300';
       break;
     case 'outline':
-      stateClass =
-        'border border-gray-200 dark:border-gray-700 hover:bg-gray-100 hover:dark:bg-gray-800 disabled:opacity-40';
+      stateClass = 'border border-gray-300 text-gray-700 hover:bg-gray-50';
+      break;
+    case 'danger':
+      'bg-red-500 text-white hover:bg-red-600';
       break;
 
     default:
