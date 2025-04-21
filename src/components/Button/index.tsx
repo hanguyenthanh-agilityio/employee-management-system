@@ -43,7 +43,7 @@ export const Button = ({
       stateClass = 'bg-[#0A278F] text-white hover:bg-[#0c2f9e]';
       break;
     case 'secondary':
-      stateClass = 'bg-gray-100 text-gray-800 hover:bg-gray-200';
+      stateClass = 'bg-[#FFC20E] text-[#000] hover:bg-yellow';
       break;
     case 'success':
       stateClass =
