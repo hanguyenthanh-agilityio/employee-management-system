@@ -58,7 +58,7 @@ export const Button = ({
         'bg-rose-500 text-white hover:bg-rose-600 disabled:bg-rose-300';
       break;
     case 'outline':
-      stateClass = 'border border-gray-300 text-gray-700 hover:bg-gray-50';
+      stateClass = 'bg-white text-[#000] hover:bg-gray-50';
       break;
     case 'danger':
       'bg-red-500 text-white hover:bg-red-600';
