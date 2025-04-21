@@ -1,38 +1,63 @@
 import { AuthLayout } from '@/components/AuthLayout';
 import { Button } from '@/components/Button';
-import { Checkbox } from '@/components/Checkbox';
+import Checkbox from '@/components/Checkbox';
 import Input from '@/components/Input';
 import Link from 'next/link';
 
+const inputFields = [
+  { label: 'First Name' },
+  { label: 'Last Name' },
+  { label: 'E-mail Address', type: 'email' },
+  { label: 'Phone Number' },
+  { label: 'Password', type: 'password' },
+  { label: 'Confirm Password', type: 'password' },
+];
+
+const checkboxes = [
+  { id: 'newsletter', label: 'Yes, I want to receive KRIS newsletters' },
+  {
+    id: 'terms',
+    label: 'I agree to all the ',
+    subLabel: 'Terms, Privacy Policy',
+  },
+];
+
 const RegisterPage = () => (
   <AuthLayout type="register">
-    <h1 className="text-2xl font-semibold text-[#0A278F] mb-1">
+    <h1 className="text-[56px] font-semibold text-[#253D90] mb-2">
       Welcome to XCELTECH
     </h1>
-    <p className="text-sm text-gray-500 mb-6">Register your account</p>
+    <p className="text-[30px] text-[#969696] my-6">Register your account</p>
 
-    <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Input label="First Name" />
-      <Input label="Last Name" />
-      <Input label="E-mail Address" type="email" />
-      <Input label="Phone Number" />
-      <Input label="Password" type="password" />
-      <Input label="Confirm Password" type="password" />
-
-      <div className="col-span-2 space-y-2">
-        <Checkbox
-          id="newsletter"
-          label="Yes, I want to receive KRIS newsletters"
+    <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {inputFields.map((field, index) => (
+        <Input
+          key={index}
+          label={field.label}
+          type={field.type}
+          labelColor="text-[#253D90]"
         />
-        <Checkbox id="terms" label="I agree to all the Terms, Privacy Policy" />
+      ))}
+
+      <div className="col-span-2 space-y-2 pt-4">
+        {checkboxes.map((cb) => (
+          <Checkbox
+            key={cb.id}
+            id={cb.id}
+            label={cb.label}
+            subLabel={cb.subLabel}
+          />
+        ))}
       </div>
 
-      <Button>Create Account</Button>
+      <Button customClass="max-w-[300px] justify-center py-3 text-xl my-2">
+        Create Account
+      </Button>
     </form>
 
-    <p className="text-sm text-gray-500 mt-4">
+    <p className="text-xl text-[#000] mt-8">
       Already have an account?
-      <Link href="/login" className="text-blue-600 underline">
+      <Link href="/login" className="text-[#253D90] font-bold">
         Log In
       </Link>
     </p>

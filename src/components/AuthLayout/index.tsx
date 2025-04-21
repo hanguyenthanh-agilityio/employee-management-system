@@ -26,19 +26,24 @@ export function AuthLayout({ children, type }: AuthLayoutProps) {
                 height={78}
                 className="mb-20"
               />
-              <div className="flex flex-col space-y-4 max-w-md pt-20">
-                <h2 className="text-2xl font-bold">HR Management Platform</h2>
-                <p className="text-sm">
-                  Manage all employees, payrolls, and other HR tasks
-                  efficiently.
-                </p>
-                <div className="flex  gap-4">
-                  <button className="bg-yellow-400 text-black font-bold px-4 py-2 rounded">
-                    Learn More
-                  </button>
-                  <button className="border border-white px-4 py-2 rounded hover:bg-white/10">
-                    Our Features
-                  </button>
+              <div className="flex justify-center">
+                <div className="flex flex-col space-y-4 pt-20">
+                  <h2 className="text-[50px] font-bold">
+                    HR Management Platform
+                  </h2>
+                  <div className="w-[140px] rounded-lg border-[10px] border-solid" />
+                  <p className="text-3xl py-4">
+                    Manage all employees, payrolls, and other HR tasks
+                    efficiently.
+                  </p>
+                  <div className="flex  gap-4">
+                    <button className="text-[25px] bg-yellow-400 text-black font-bold px-10 py-4 rounded-[11px]">
+                      Learn More
+                    </button>
+                    <button className="text-[25px] font-bold border-4 border-white px-10 py-4 rounded-[11px] hover:bg-white/10">
+                      Our Features
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
