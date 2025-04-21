@@ -63,31 +63,21 @@ export function AuthLayout({ children, type }: AuthLayoutProps) {
 
           {/* Banner Second */}
           <div className="relative w-full h-full">
-            {/* Background Image */}
-            <Image
-              src="/login-banner.jpg"
-              alt="Login Banner"
-              layout="fill"
-              objectFit="cover"
-              className="z-0"
-              priority
-            />
-
             {/* Overlay */}
-            <div className="absolute inset-0 bg-[#0A278F]/80 z-10" />
+            <div className="absolute inset-0 bg-[#253D90] bg-[url(/login-banner.png)] bg-blend-multiply bg-cover bg-center bg-no-repeat z-10" />
 
             {/* Content */}
-            <div className="relative z-20 flex items-center justify-center p-8 text-white h-full">
-              <div className="text-center space-y-6 max-w-sm">
-                <h2 className="text-xl font-bold">
-                  Manage all
-                  <span className="text-yellow-400">HR Operations</span> from
-                  the comfort of your home.
+            <div className="relative z-20 flex items-end justify-left p-8 text-white h-full">
+              <div className="space-y-6">
+                <h2 className=" font-bold text-[40px] pb-20">
+                  Manage all{' '}
+                  <span className="text-[#FFC20E]">HR Operations </span>
+                  from the comfort of your home.
                 </h2>
-                <div className="flex justify-center gap-1">
-                  <span className="w-3 h-1 bg-white rounded-full" />
-                  <span className="w-3 h-1 bg-white/50 rounded-full" />
-                  <span className="w-3 h-1 bg-white/50 rounded-full" />
+                <div className="flex justify-left gap-3 pt-20">
+                  <span className="w-20 h-3 bg-[#FFC20E] rounded-full" />
+                  <span className="w-20 h-3 bg-white rounded-full" />
+                  <span className="w-20 h-3 bg-white rounded-full" />
                 </div>
               </div>
             </div>
