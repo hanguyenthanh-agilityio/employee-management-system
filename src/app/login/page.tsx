@@ -36,8 +36,8 @@ const LoginPage = () => (
 
       <Button customClass="justify-center">Sign In</Button>
 
-      <p className="text-center text-xl text-[#000] mt-8">
-        Don’t have an account yet?
+      <p className="text-center text-xl text-[#8F8F8F] mt-8">
+        Don’t have an account yet?{' '}
         <Link href="/register" className="text-[#253D90] font-bold">
           Join KRIS today.
         </Link>
