@@ -1,3 +1,4 @@
+import Card from '@/components/Card';
 import ProgressBar from '@/components/ProgressBar';
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid';
 
@@ -8,7 +9,7 @@ const leaveData = [
 ];
 
 const LeaveSection = () => (
-  <div className="bg-white rounded-xl p-8 shadow-sm">
+  <Card className="p-8">
     <div className="flex justify-between items-start">
       <h2 className="font-bold text-[#545559] text-3xl">
         Available Leave Days
@@ -25,7 +26,7 @@ const LeaveSection = () => (
         />
       ))}
     </div>
-  </div>
+  </Card>
 );
 
 export default LeaveSection;
