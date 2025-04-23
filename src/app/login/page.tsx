@@ -1,4 +1,3 @@
-import { AuthLayout } from '@/components/AuthLayout';
 import { Button } from '@/components/Button';
 import Checkbox from '@/components/Checkbox';
 import Input from '@/components/Input';
@@ -10,7 +9,7 @@ const inputFields = [
 ];
 
 const LoginPage = () => (
-  <AuthLayout type="login">
+  <>
     <h1 className="text-[56px] font-semibold text-[#253D90] mb-2">Login</h1>
     <p className="text-[30px] text-[#969696] my-6">Login to your account.</p>
 
@@ -43,7 +42,7 @@ const LoginPage = () => (
         </Link>
       </p>
     </form>
-  </AuthLayout>
+  </>
 );
 
 export default LoginPage;
