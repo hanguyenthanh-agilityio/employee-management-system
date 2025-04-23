@@ -54,7 +54,7 @@ const RegisterPage = () => (
       </Button>
     </form>
 
-    <p className="text-xl text-[#000] mt-8">
+    <p className="text-xl text-[#8F8F8F] mt-8">
       Already have an account?
       <Link href="/login" className="text-[#253D90] font-bold">
         Log In
