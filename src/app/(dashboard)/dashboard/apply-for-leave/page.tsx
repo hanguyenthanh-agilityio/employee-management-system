@@ -1,5 +1,6 @@
 import Breadcrumbs from '@/components/Breadcrumb';
 import LeaveHistorySection from './components/LeaveHistorySection';
+import { BookOpenIcon } from '@heroicons/react/16/solid';
 
 const sampleLeaveData = [
   {
@@ -57,6 +58,10 @@ const ApplyForLeavePage = () => (
     <Breadcrumbs paths={['Dashboard', 'Apply for Leave']} />
     <div className="bg-white">
       <div className="p-8">
+        <h2 className="flex item-center gap-4 text-3xl text-[#1D1D1D] px-5">
+          <BookOpenIcon width={34} height={34} />
+          Leave Application
+        </h2>
         <LeaveHistorySection data={sampleLeaveData} />
       </div>
     </div>

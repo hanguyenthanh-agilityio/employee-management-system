@@ -13,7 +13,8 @@ type ButtonProps = {
     | 'error'
     | 'info'
     | 'warning'
-    | 'danger';
+    | 'danger'
+    | 'export';
   customClass?: string;
   name?: string;
   value?: string;
@@ -61,7 +62,10 @@ export const Button = ({
       stateClass = 'bg-white text-[#000] hover:bg-gray-50';
       break;
     case 'danger':
-      'bg-red-500 text-white hover:bg-red-600';
+      stateClass = 'bg-red-500 text-white hover:bg-red-600';
+      break;
+    case 'export':
+      stateClass = 'bg-[#3F861E] text-white hover:bg-green';
       break;
 
     default:
