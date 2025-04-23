@@ -1,6 +1,7 @@
 'use client';
 
 import LeaveCard from '../LeaveApplicationCard';
+import { useRouter } from 'next/navigation';
 
 const leaves = [
   { title: 'Annual Leave', days: 60 },
@@ -10,7 +11,13 @@ const leaves = [
 ];
 
 const LeaveApplicationSection = () => {
-  const handleClick = () => {};
+  const router = useRouter();
+  const format = (text: string) => text.toLowerCase().replace(/\s+/g, '-');
+
+  const handleClick = (title: string) => {
+    const path = `/dashboard/apply-for-leave/${format(title)}`;
+    router.push(path);
+  };
 
   return (
     <div className="overflow-x-auto w-full">
@@ -20,7 +27,9 @@ const LeaveApplicationSection = () => {
             key={index}
             title={leave.title}
             days={leave.days}
-            onClick={handleClick}
+            onClick={() => {
+              handleClick(leave.title);
+            }}
           />
         ))}
       </div>
