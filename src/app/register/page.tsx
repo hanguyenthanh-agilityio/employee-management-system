@@ -1,4 +1,3 @@
-import { AuthLayout } from '@/components/AuthLayout';
 import { Button } from '@/components/Button';
 import Checkbox from '@/components/Checkbox';
 import Input from '@/components/Input';
@@ -23,7 +22,7 @@ const checkboxes = [
 ];
 
 const RegisterPage = () => (
-  <AuthLayout type="register">
+  <>
     <h1 className="text-[56px] font-semibold text-[#253D90] mb-2">
       Welcome to XCELTECH
     </h1>
@@ -61,7 +60,7 @@ const RegisterPage = () => (
         Log In
       </Link>
     </p>
-  </AuthLayout>
+  </>
 );
 
 export default RegisterPage;
