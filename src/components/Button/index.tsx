@@ -4,7 +4,7 @@ type ButtonProps = {
   children: ReactNode;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  type?: 'button' | 'submit';
+  type?: 'button' | 'submit' | 'reset';
   variant?:
     | 'outline'
     | 'primary'
