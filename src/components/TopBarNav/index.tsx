@@ -17,19 +17,24 @@ const TopBarNav = () => {
 
   return (
     <>
-      {listItem.map((item) => (
-        <Link
-          key={item.name}
-          href={item.href}
-          className={clsx(
-            'text-xl font-medium',
-            item.href === pathname &&
-              'text-[#253D90] border-b-2 border-yellow-400 pb-3',
-          )}
-        >
-          {item.name}
-        </Link>
-      ))}
+      {listItem.map((item) => {
+        const isActive = pathname.startsWith(item.href);
+
+        return (
+          <Link
+            key={item.name}
+            href={item.href}
+            className={clsx(
+              'text-xl font-medium transition-colors duration-200',
+              isActive
+                ? 'text-[#253D90] border-b-2 border-yellow-400 pb-3'
+                : 'text-gray-600 hover:text-[#253D90]',
+            )}
+          >
+            {item.name}
+          </Link>
+        );
+      })}
     </>
   );
 };

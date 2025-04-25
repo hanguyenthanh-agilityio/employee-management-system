@@ -4,7 +4,7 @@ type ButtonProps = {
   children: ReactNode;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  type?: 'button' | 'submit';
+  type?: 'button' | 'submit' | 'reset';
   variant?:
     | 'outline'
     | 'primary'
@@ -13,7 +13,8 @@ type ButtonProps = {
     | 'error'
     | 'info'
     | 'warning'
-    | 'danger';
+    | 'danger'
+    | 'export';
   customClass?: string;
   name?: string;
   value?: string;
@@ -43,7 +44,7 @@ export const Button = ({
       stateClass = 'bg-[#0A278F] text-white hover:bg-[#0c2f9e]';
       break;
     case 'secondary':
-      stateClass = 'bg-gray-100 text-gray-800 hover:bg-gray-200';
+      stateClass = 'bg-[#FFC20E] text-[#000] hover:bg-yellow';
       break;
     case 'success':
       stateClass =
@@ -58,10 +59,13 @@ export const Button = ({
         'bg-rose-500 text-white hover:bg-rose-600 disabled:bg-rose-300';
       break;
     case 'outline':
-      stateClass = 'border border-gray-300 text-gray-700 hover:bg-gray-50';
+      stateClass = 'bg-white text-[#000] hover:bg-gray-50';
       break;
     case 'danger':
-      'bg-red-500 text-white hover:bg-red-600';
+      stateClass = 'bg-red-500 text-white hover:bg-red-600';
+      break;
+    case 'export':
+      stateClass = 'bg-[#3F861E] text-white hover:bg-green';
       break;
 
     default:
