@@ -3,41 +3,33 @@
 import { ArrowDownCircleIcon, FunnelIcon } from '@heroicons/react/16/solid';
 import GenericTable from '../LeaveHistoryTable';
 import { Button } from '@/components/Button';
+import { LeaveItem } from '@/types/components';
 
-export interface LeaveData {
-  name: string;
-  duration: number;
-  startDate: string;
-  endDate: string;
-  type: string;
-  reason: string;
-}
-
-const LeaveHistorySection = ({ data }: { data: LeaveData[] }) => {
+const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   const columns = [
     {
       title: 'Name(s)',
-      render: (row: LeaveData) => row.name,
+      render: (row: LeaveItem) => row.employeeName,
     },
     {
       title: 'Duration(s)',
-      render: (row: LeaveData) => row.duration,
+      render: (row: LeaveItem) => row.durations,
     },
     {
       title: 'Start Date',
-      render: (row: LeaveData) => row.startDate,
+      render: (row: LeaveItem) => row.startDate,
     },
     {
       title: 'End Date',
-      render: (row: LeaveData) => row.endDate,
+      render: (row: LeaveItem) => row.endDate,
     },
     {
       title: 'Type',
-      render: (row: LeaveData) => row.type,
+      render: (row: LeaveItem) => row.type,
     },
     {
       title: 'Reason(s)',
-      render: (row: LeaveData) => row.reason,
+      render: (row: LeaveItem) => row.reason,
     },
     {
       title: 'Actions',
