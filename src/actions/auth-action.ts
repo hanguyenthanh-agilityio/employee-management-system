@@ -1,9 +1,9 @@
 'use server';
 
-import { loginAPI } from '@/api/auth';
+import { getUserData, loginAPI } from '@/api/auth';
 import { loginSchema } from '@/utils/schemas/loginSchema';
-import { cookies } from 'next/headers';
 import axios from 'axios';
+import { cookies } from 'next/headers';
 
 export const loginAction = async (_: unknown, formData: FormData) => {
   const fields = {
@@ -23,18 +23,32 @@ export const loginAction = async (_: unknown, formData: FormData) => {
   try {
     const data = await loginAPI(parsed.data);
 
-    (await cookies()).set('token', data.token, {
+    if (!data.access) {
+      return {
+        success: false,
+        message: data.message || 'Invalid credentials',
+      };
+    }
+
+    const cookieStore = await cookies();
+    cookieStore.set('token', data.access, {
       httpOnly: true,
       secure: true,
       path: '/',
     });
 
-    axios.defaults.headers['Authorization'] = `Bearer ${data.token}`;
-
-    console.log('Login successful, token set:', data.token);
+    const userData = await getUserData(data.token);
+    console.log('User datadata:', userData);
 
     return { success: true };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err) {
+    console.error('Login error:', err);
+
+    if (axios.isAxiosError(err)) {
+      console.error('Axios error response:', err.response?.data);
+    }
+
     return {
       success: false,
       message: 'Invalid credentials or server error',

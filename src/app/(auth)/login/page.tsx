@@ -6,7 +6,7 @@ import Checkbox from '@/components/Checkbox';
 import Input from '@/components/Input';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useActionState, useEffect } from 'react';
+import { useActionState, useEffect, startTransition, useState } from 'react';
 
 const inputFields = [
   { label: 'E-mail Address', type: 'email' },
@@ -15,15 +15,26 @@ const inputFields = [
 
 const LoginPage = () => {
   const router = useRouter();
+  const [isPending, setIsPending] = useState(false);
 
-  const [state, formAction] = useActionState(loginAction, {
-    success: false,
-    message: '',
-  });
+  const [state, formAction] = useActionState(
+    async (prevState: unknown, formData: FormData) => {
+      setIsPending(true);
+      const result = await loginAction(prevState, formData);
+      setIsPending(false);
+      return result;
+    },
+    {
+      success: false,
+      message: '',
+    },
+  );
 
   useEffect(() => {
     if (state.success) {
-      router.push('/dashboard');
+      startTransition(() => {
+        router.push('/leave-applications');
+      });
     }
   }, [state.success, router]);
 
@@ -39,14 +50,13 @@ const LoginPage = () => {
             name={field.type}
             label={field.label}
             type={field.type}
-            labelClassName="block text-xl font-bold mb-3  text-[#253D90]"
-            inputClassName="rounded-md px-4 py-2 text-[#253D90]
-              shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-[#0A50C2]/30"
+            labelClassName="block text-xl font-bold mb-3 text-[#253D90]"
+            inputClassName="rounded-md px-4 py-2 text-[#253D90] shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-[#0A50C2]/30"
           />
         ))}
 
         <div className="flex justify-between pt-4">
-          <Checkbox label=" Remember me" id="" />
+          <Checkbox label="Remember me" id="" />
           <Link
             href="/reset-password"
             className="text-[#253D90] font-bold text-xl"
@@ -55,8 +65,14 @@ const LoginPage = () => {
           </Link>
         </div>
 
-        <Button type="submit" customClass="justify-center">
-          Sign In
+        {state.message && (
+          <div className="text-red-600 text-center text-lg font-semibold">
+            {state.message}
+          </div>
+        )}
+
+        <Button type="submit" customClass="justify-center" disabled={isPending}>
+          {isPending ? 'Signing In...' : 'Sign In'}
         </Button>
 
         <p className="text-center text-xl text-[#8F8F8F] mt-8">
