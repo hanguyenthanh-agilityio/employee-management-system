@@ -1,5 +1,6 @@
 'use client';
 
+import { createLeaveApplication } from '@/api/leaveApplications';
 import Breadcrumbs from '@/components/Breadcrumb';
 import Form from '@/components/Form';
 import { BookOpenIcon } from '@heroicons/react/16/solid';
@@ -19,7 +20,7 @@ const CreateLeavePage = () => {
           </span>
         </div>
 
-        <form>
+        <form action={createLeaveApplication}>
           <Form />
         </form>
       </div>
