@@ -1,7 +1,7 @@
 'use client';
 
 import Input from '../Input';
-import Select from '../Select';
+// import Select from '../Select';
 import { Button } from '../Button';
 
 const Form = ({
@@ -74,14 +74,14 @@ const Form = ({
         />
       </div>
 
-      <Select
+      {/* <Select
         label="Choose Relief Officer"
         name="reliefOfficer"
         options={[
           { value: 'officer1', label: 'Officer 1' },
           { value: 'officer2', label: 'Officer 2' },
         ]}
-      />
+      /> */}
 
       <div className="flex justify-between py-4">
         <Button type="submit" customClass="bg-green-600 hover:bg-green-700">
