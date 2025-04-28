@@ -3,7 +3,7 @@
 import { fetchData } from '@/services/apiService';
 import { CreateLeavePayload } from '@/types/components';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
 export const fetchLeaveApplications = async () => {
   const data = await fetchData('/leave-applications', 'GET');
@@ -27,7 +27,7 @@ export const createLeaveApplication = async (formData: FormData) => {
     type,
     reason,
     durations,
-    employeeName: 'Nhan Tran',
+    // employeeName: 'Nhan Tran',
   };
   try {
     const data = await fetchData('/leave-applications', 'POST', body);
@@ -36,7 +36,7 @@ export const createLeaveApplication = async (formData: FormData) => {
 
     revalidatePath('/leave-applications');
 
-    redirect('/leave-applications');
+    // redirect('/leave-applications');
   } catch (error) {
     console.error(error);
     throw error;

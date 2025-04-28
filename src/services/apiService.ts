@@ -3,23 +3,30 @@ import { API_URL } from '@/constants/api_url';
 
 export const fetchData = async (
   endpoint: string,
-  method: 'GET' | 'POST' = 'GET',
-  body: object | null = null,
+  method: 'GET' | 'POST',
+  body: object | FormData | null = null,
+  isFormData: boolean = false,
 ) => {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
     Authorization: `Bearer ${ACCESS_TOKEN}`,
   };
+
+  if (!isFormData) {
+    headers['Content-Type'] = 'multipart/form-data';
+  }
 
   const options: RequestInit = {
     method,
     headers,
-    body: body ? JSON.stringify(body) : null,
-    next: { revalidate: 60 }, // Revalidate every 60 seconds (cho GET)
+    next: { revalidate: 60 },
+    ...(body && {
+      body: isFormData ? (body as FormData) : JSON.stringify(body),
+    }),
   };
 
   try {
     const res = await fetch(`${API_URL}${endpoint}`, options);
+    console.log(res);
 
     if (!res.ok) {
       console.error(`Failed API call: ${res.status} - ${res.statusText}`);
