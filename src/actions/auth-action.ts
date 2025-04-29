@@ -37,7 +37,9 @@ export const loginAction = async (_: unknown, formData: FormData) => {
       path: '/',
     });
 
-    const userData = await getUserData(data.token);
+    console.log('Token in cookie:', (await cookies()).get('token')?.value);
+
+    const userData = await getUserData(data.access);
     console.log('User datadata:', userData);
 
     return { success: true };

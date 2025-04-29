@@ -1,24 +1,24 @@
-import { ACCESS_TOKEN } from '@/constants/access-token';
 import { API_URL } from '@/constants/api_url';
+import { cookies } from 'next/headers';
 
 export const fetchData = async (
   endpoint: string,
   method: 'GET' | 'POST',
   body: object | FormData | null = null,
-  isFormData: boolean = false,
+  isFormData = false,
 ) => {
-  const headers: HeadersInit = {
-    Authorization: `Bearer ${ACCESS_TOKEN}`,
-  };
+  const token = (await cookies()).get('token')?.value;
+  console.log('Token in cookie:', token);
 
-  if (!isFormData) {
-    headers['Content-Type'] = 'multipart/form-data';
-  }
+  const headers: HeadersInit = {
+    ...(token && { Authorization: `Bearer ${token}` }),
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+  };
 
   const options: RequestInit = {
     method,
     headers,
-    next: { revalidate: 60 },
+    cache: 'no-store',
     ...(body && {
       body: isFormData ? (body as FormData) : JSON.stringify(body),
     }),

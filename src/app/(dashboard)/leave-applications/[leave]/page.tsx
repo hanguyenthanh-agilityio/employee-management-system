@@ -20,7 +20,11 @@ const CreateLeavePage = () => {
           </span>
         </div>
 
-        <form action={createLeaveApplication}>
+        <form
+          action={createLeaveApplication}
+          encType="multipart/form-data"
+          method="POST"
+        >
           <Form />
         </form>
       </div>
