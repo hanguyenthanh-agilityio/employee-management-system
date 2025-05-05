@@ -4,9 +4,9 @@ import { API_URL } from '@/constants/api_url';
 // import { fetchData } from '@/services/apiService';
 import { LeaveApplication } from '@/types/components';
 import { leaveApplicationSchema } from '@/utils/schemas/leaveApplicationSchema';
-import { revalidatePath } from 'next/cache';
+// import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
 export const fetchLeaveApplications = async () => {
   const token = (await cookies()).get('token')?.value;
@@ -35,12 +35,12 @@ export const fetchLeaveApplications = async () => {
 // Create Leave Application
 export const createLeaveApplication = async (formDataInput: FormData) => {
   const rawData = {
-    leaveType: formDataInput.get('leaveType'),
-    startDate: formDataInput.get('startDate'),
-    endDate: formDataInput.get('endDate'),
-    durations: formDataInput.get('durations'),
-    resumptionDate: formDataInput.get('resumptionDate'),
-    reason: formDataInput.get('reason'),
+    leaveType: formDataInput.get('leaveType')?.toString(),
+    startDate: formDataInput.get('startDate')?.toString(),
+    endDate: formDataInput.get('endDate')?.toString(),
+    durations: formDataInput.get('durations')?.toString() || '0',
+    resumptionDate: formDataInput.get('resumptionDate')?.toString(),
+    reason: formDataInput.get('reason')?.toString(),
   };
 
   const parsed = leaveApplicationSchema.safeParse(rawData);
@@ -52,32 +52,25 @@ export const createLeaveApplication = async (formDataInput: FormData) => {
 
   const token = (await cookies()).get('token')?.value;
 
-  const payload = {
-    start_date: parsed.data.startDate,
-    end_date: parsed.data.endDate,
-    resumption_date: parsed.data.resumptionDate,
-    type: parsed.data.leaveType,
-    reason: parsed.data.reason,
-    durations: parsed.data.durations,
-  };
+  const formData = new FormData();
+  formData.append('start_date', parsed.data.startDate);
+  formData.append('end_date', parsed.data.endDate);
+  formData.append('resumption_date', parsed.data.resumptionDate);
+  formData.append('type', parsed.data.leaveType);
+  formData.append('reason', parsed.data.reason);
+  formData.append('durations', parsed.data.durations.toString());
 
-  try {
-    const res = await fetch(`${API_URL}/leave-applications`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
+  const res = await fetch(`${API_URL}/leave-applications`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
 
-    if (!res.ok) {
-      throw new Error(`API Error: ${res.statusText}`);
-    }
-    revalidatePath('/leave-applications');
-    redirect('/leave-applications');
-  } catch (error) {
-    console.error('Error in creating leave application:', error);
-    throw error;
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('Leave application failed:', errorText);
+    throw new Error(`API Error: ${res.status} - ${errorText}`);
   }
 };

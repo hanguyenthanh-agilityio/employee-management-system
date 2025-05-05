@@ -4,8 +4,20 @@ import { createLeaveApplication } from '@/api/leaveApplications';
 import Breadcrumbs from '@/components/Breadcrumb';
 import Form from '@/components/Form';
 import { BookOpenIcon } from '@heroicons/react/16/solid';
+import { useRouter } from 'next/navigation';
 
 const CreateLeavePage = () => {
+  const router = useRouter();
+
+  const handleSubmit = async (formData: FormData) => {
+    try {
+      await createLeaveApplication(formData);
+      router.push('/leave-applications');
+    } catch (err) {
+      console.error('Submit failed:', err);
+    }
+  };
+
   return (
     <>
       <Breadcrumbs paths={['Dashboard', 'Apply for Leave', 'Annual Leave']} />
@@ -21,9 +33,9 @@ const CreateLeavePage = () => {
         </div>
 
         <form
-          action={createLeaveApplication}
-          encType="multipart/form-data"
-          method="POST"
+          action={handleSubmit}
+          // encType="multipart/form-data"
+          // method="POST"
         >
           <Form />
         </form>
