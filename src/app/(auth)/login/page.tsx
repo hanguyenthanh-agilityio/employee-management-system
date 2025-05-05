@@ -1,4 +1,3 @@
-// app/login/page.tsx
 import LoginForm from '@/components/LoginForm';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

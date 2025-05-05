@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { loginAction } from '@/actions/auth-action';
 import { useEffect } from 'react';
 import Input from '@/components/Input';
@@ -16,7 +16,7 @@ const initialState = {
 
 const LoginForm = () => {
   const router = useRouter();
-  const [state, formAction] = useFormState(loginAction, initialState);
+  const [state, formAction] = useActionState(loginAction, initialState);
 
   useEffect(() => {
     if (state.success) {
