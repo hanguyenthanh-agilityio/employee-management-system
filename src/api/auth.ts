@@ -1,3 +1,5 @@
+'use server';
+
 import { API_URL } from '@/constants/api_url';
 import { LoginInput } from '@/utils/schemas/loginSchema';
 import axios from 'axios';
