@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import Select from '@/components/Select';
 import Dropdown from '@/components/Dropdown';
+import { deleteLeaveApplication } from '@/api/leaveApplications';
 
 const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   /**
@@ -56,6 +57,17 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   const handleFilterChange = (e: { target: { value: string } }) =>
     handleChange(e.target.value);
 
+  // Handle delete Leave Application
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteLeaveApplication(id);
+
+      router.refresh();
+    } catch (error) {
+      console.error('Delete failed', error);
+    }
+  };
+
   const columns = [
     {
       title: 'Name(s)',
@@ -90,6 +102,11 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
               label: 'Edit',
               onClick: () => router.push(`/leave-applications/${row.id}/edit`),
               textClass: 'text-blue-600',
+            },
+            {
+              label: 'Delete',
+              onClick: () => handleDelete(row.id),
+              textClass: 'text-red-600',
             },
           ]}
         />

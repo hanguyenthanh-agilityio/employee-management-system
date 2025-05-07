@@ -79,3 +79,22 @@ export const patchLeaveApplication = async (
 
   return res;
 };
+
+// Delete Leave Application
+export const deleteLeave = async (token: string, id: string) => {
+  const res = await fetch(`${API_URL}/leave-applications/${id}/`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('API Delete error:', res.status, errorText);
+    throw new Error('Failed to delete leave application');
+  }
+
+  return res;
+};

@@ -5,6 +5,7 @@ import {
   getLeaveApplications,
   postLeaveApplication,
   patchLeaveApplication,
+  deleteLeave,
 } from '@/services/apiService';
 import { LeaveApplication } from '@/types/components';
 import { getTokenFromCookies } from '@/utils/auth';
@@ -75,4 +76,11 @@ export const updateLeaveApplication = async (
 
   revalidatePath('/leave-applications');
   redirect('/leave-applications');
+};
+
+// Delete Leave Application
+export const deleteLeaveApplication = async (id: string) => {
+  const token = await getTokenFromCookies();
+  await deleteLeave(token, id);
+  revalidatePath('/leave-applications');
 };
