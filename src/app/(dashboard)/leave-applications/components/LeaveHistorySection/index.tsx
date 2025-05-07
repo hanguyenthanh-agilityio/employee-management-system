@@ -7,6 +7,7 @@ import { LeaveItem } from '@/types/components';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import Select from '@/components/Select';
+import Dropdown from '@/components/Dropdown';
 
 const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   /**
@@ -82,11 +83,16 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     },
     {
       title: 'Actions',
-      render: () => (
-        <button className="flex items-center justify-center gap-5 bg-[#253D90] hover:bg-blue-800 text-white font-bold px-10 py-2 rounded text-xl shadow">
-          Actions
-          <ArrowDownCircleIcon width={19} height={19} />
-        </button>
+      render: (row: LeaveItem) => (
+        <Dropdown
+          actions={[
+            {
+              label: 'Edit',
+              onClick: () => router.push(`/leave-applications/${row.id}/edit`),
+              textClass: 'text-blue-600',
+            },
+          ]}
+        />
       ),
       className: 'flex justify-center',
     },
