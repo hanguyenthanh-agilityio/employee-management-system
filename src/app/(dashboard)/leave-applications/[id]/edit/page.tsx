@@ -1,7 +1,18 @@
 import Breadcrumbs from '@/components/Breadcrumb';
 import { BookOpenIcon } from '@heroicons/react/16/solid';
+import { fetchLeaveApplicationById } from '@/api/leaveApplications';
+import EditForm from './editForm';
 
-const UpdateLeavePage = async () => {
+const UpdateLeavePage = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+  const id = params.id;
+  console.log('Leave ID:', id);
+
+  const leave = await fetchLeaveApplicationById(id);
+  console.log('Fetched leave:', leave);
+
+  if (!leave) return <div>Leave application not found!</div>;
+
   return (
     <>
       <Breadcrumbs paths={['Dashboard', 'Apply for Leave', 'Edit']} />
@@ -15,6 +26,8 @@ const UpdateLeavePage = async () => {
             Fill the required fields below to apply for annual leave.
           </span>
         </div>
+
+        <EditForm leave={leave} />
       </div>
     </>
   );
