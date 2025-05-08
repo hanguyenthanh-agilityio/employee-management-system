@@ -1,1 +1,1 @@
-export const API_URL = 'https://human-resource.up.railway.app/api';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL;

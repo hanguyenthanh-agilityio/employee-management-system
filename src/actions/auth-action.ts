@@ -35,6 +35,7 @@ export const loginAction = async (_: unknown, formData: FormData) => {
       httpOnly: true,
       secure: true,
       path: '/',
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     console.log('Token in cookie:', (await cookies()).get('token')?.value);
