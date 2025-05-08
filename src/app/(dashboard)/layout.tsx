@@ -1,7 +1,15 @@
 import TopBar from '@/components/TopBar';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
-const DashboardLayout = ({ children }: { children: ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: ReactNode }) => {
+  const token = (await cookies()).get('token')?.value;
+
+  if (!token) {
+    redirect('/login');
+  }
+
   return (
     <div className="bg-[#E6EEF9] min-h-screen">
       <TopBar />

@@ -1,30 +1,46 @@
-type SelectFieldProps = {
+import { ChangeEvent } from 'react';
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+export interface SelectFieldProps {
   label: string;
   name: string;
-  options: { value: string; label: string }[];
-  icon?: React.ReactNode;
-};
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
+  options: Option[];
+  className?: string;
+}
 
-const Select = ({ label, name, options, icon }: SelectFieldProps) => (
-  <div>
-    <label className="text-[25px] text-[#1D1D1D] flex items-center gap-2">
-      {icon}
-      {label}
-    </label>
-    <select
-      name={name}
-      className="bg-[#E3EDF9] mt-1 block w-full rounded-[9px] border px-4 py-4 text-sm"
-      required
-      defaultValue=""
-    >
-      <option value="">Select {label.toLowerCase()}</option>
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </select>
-  </div>
-);
+const Select = ({
+  label,
+  name,
+  value,
+  onChange,
+  options,
+  className,
+}: SelectFieldProps) => {
+  return (
+    <div className={className}>
+      <label className="block text-xl font-medium text-gray-900 w-[200px]">
+        {label}
+      </label>
+      <select
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 max-w-[150px]"
+      >
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
 export default Select;

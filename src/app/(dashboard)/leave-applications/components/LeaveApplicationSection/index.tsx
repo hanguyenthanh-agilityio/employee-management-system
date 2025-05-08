@@ -15,7 +15,7 @@ const LeaveApplicationSection = () => {
   const format = (text: string) => text.toLowerCase().replace(/\s+/g, '-');
 
   const handleClick = (title: string) => {
-    const path = `/dashboard/apply-for-leave/${format(title)}`;
+    const path = `/leave-applications/${format(title)}`;
     router.push(path);
   };
 
