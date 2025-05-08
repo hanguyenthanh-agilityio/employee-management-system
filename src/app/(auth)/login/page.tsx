@@ -1,89 +1,15 @@
-'use client';
+import LoginForm from '@/components/LoginForm';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-import { loginAction } from '@/actions/auth-action';
-import { Button } from '@/components/Button';
-import Checkbox from '@/components/Checkbox';
-import Input from '@/components/Input';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useActionState, useEffect, startTransition, useState } from 'react';
+const LoginPage = async () => {
+  const token = (await cookies()).get('token')?.value;
 
-const inputFields = [
-  { label: 'E-mail Address', type: 'email' },
-  { label: 'Password', type: 'password' },
-];
+  if (token) {
+    redirect('/leave-applications');
+  }
 
-const LoginPage = () => {
-  const router = useRouter();
-  const [isPending, setIsPending] = useState(false);
-
-  const [state, formAction] = useActionState(
-    async (prevState: unknown, formData: FormData) => {
-      setIsPending(true);
-      const result = await loginAction(prevState, formData);
-      setIsPending(false);
-      return result;
-    },
-    {
-      success: false,
-      message: '',
-    },
-  );
-
-  useEffect(() => {
-    if (state.success) {
-      startTransition(() => {
-        router.push('/leave-applications');
-      });
-    }
-  }, [state.success, router]);
-
-  return (
-    <>
-      <h1 className="text-[56px] font-semibold text-[#253D90] mb-2">Login</h1>
-      <p className="text-[30px] text-[#969696] my-6">Login to your account.</p>
-
-      <form action={formAction} className="flex flex-col gap-6">
-        {inputFields.map((field, index) => (
-          <Input
-            key={index}
-            name={field.type}
-            label={field.label}
-            type={field.type}
-            labelClassName="block text-xl font-bold mb-3 text-[#253D90]"
-            inputClassName="rounded-md px-4 py-2 text-[#253D90] shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-[#0A50C2]/30"
-          />
-        ))}
-
-        <div className="flex justify-between pt-4">
-          <Checkbox label="Remember me" id="" />
-          <Link
-            href="/reset-password"
-            className="text-[#253D90] font-bold text-xl"
-          >
-            Reset Password?
-          </Link>
-        </div>
-
-        {state.message && (
-          <div className="text-red-600 text-center text-lg font-semibold">
-            {state.message}
-          </div>
-        )}
-
-        <Button type="submit" customClass="justify-center" disabled={isPending}>
-          {isPending ? 'Signing In...' : 'Sign In'}
-        </Button>
-
-        <p className="text-center text-xl text-[#8F8F8F] mt-8">
-          Don’t have an account yet?{' '}
-          <Link href="/register" className="text-[#253D90] font-bold">
-            Join KRIS today.
-          </Link>
-        </p>
-      </form>
-    </>
-  );
+  return <LoginForm />;
 };
 
 export default LoginPage;

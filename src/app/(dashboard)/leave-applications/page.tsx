@@ -12,7 +12,7 @@ const ApplyForLeavePage = async () => {
 
   return (
     <>
-      <Breadcrumbs paths={['Dashboard', 'Apply for Leave']} />
+      <Breadcrumbs paths={['Dashboard', 'Leave Applications']} />
       <div className="bg-white">
         <div className="p-8">
           <h2 className="flex item-center gap-4 text-3xl text-[#1D1D1D] px-5 py-8">

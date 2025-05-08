@@ -1,6 +1,6 @@
 'use server';
 
-import { getUserData, loginAPI } from '@/api/auth';
+import { loginAPI } from '@/api/auth';
 import { loginSchema } from '@/utils/schemas/loginSchema';
 import axios from 'axios';
 import { cookies } from 'next/headers';
@@ -37,8 +37,7 @@ export const loginAction = async (_: unknown, formData: FormData) => {
       path: '/',
     });
 
-    const userData = await getUserData(data.token);
-    console.log('User datadata:', userData);
+    console.log('Token in cookie:', (await cookies()).get('token')?.value);
 
     return { success: true };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

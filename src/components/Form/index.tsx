@@ -27,6 +27,7 @@ const Form = ({
           type="date"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          required
         />
         <Input
           label="End Date"
@@ -34,16 +35,18 @@ const Form = ({
           type="date"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          required
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           label="Duration (days)"
-          name="duration"
+          name="durations"
           type="number"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          required
         />
         <Input
           label="Resumption Date"
@@ -51,6 +54,7 @@ const Form = ({
           type="date"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          required
         />
       </div>
 

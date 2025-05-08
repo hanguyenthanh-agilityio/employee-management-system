@@ -1,44 +1,44 @@
 'use server';
 
-import { fetchData } from '@/services/apiService';
-import { CreateLeavePayload } from '@/types/components';
+import {
+  getLeaveApplications,
+  postLeaveApplication,
+} from '@/services/apiService';
+import { LeaveApplication } from '@/types/components';
+import { leaveApplicationSchema } from '@/utils/schemas/leaveApplicationSchema';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export const fetchLeaveApplications = async () => {
-  const data = await fetchData('/leave-applications', 'GET');
+  const token = (await cookies()).get('token')?.value;
+  if (!token) throw new Error('Token not found');
 
+  const data: LeaveApplication = await getLeaveApplications(token);
   return data;
 };
 
 // Create Leave Application
-export const createLeaveApplication = async (formData: FormData) => {
-  const startDate = formData.get('startDate') as string;
-  const endDate = formData.get('endDate') as string;
-  const resumptionDate = formData.get('resumptionDate') as string;
-  const type = formData.get('leaveType') as string;
-  const reason = formData.get('reason') as string;
-  const durations = Number(formData.get('duration'));
-
-  const body: CreateLeavePayload = {
-    startDate,
-    endDate,
-    resumptionDate,
-    type,
-    reason,
-    durations,
-    employeeName: 'Nhan Tran',
+export const createLeaveApplication = async (formDataInput: FormData) => {
+  const rawData = {
+    leaveType: formDataInput.get('leaveType')?.toString(),
+    startDate: formDataInput.get('startDate')?.toString(),
+    endDate: formDataInput.get('endDate')?.toString(),
+    durations: formDataInput.get('durations')?.toString() || '0',
+    resumptionDate: formDataInput.get('resumptionDate')?.toString(),
+    reason: formDataInput.get('reason')?.toString(),
   };
-  try {
-    const data = await fetchData('/leave-applications', 'POST', body);
 
-    console.log('Leave create:', data);
-
-    revalidatePath('/leave-applications');
-
-    redirect('/leave-applications');
-  } catch (error) {
-    console.error(error);
-    throw error;
+  const parsed = leaveApplicationSchema.safeParse(rawData);
+  if (!parsed.success) {
+    throw new Error('Validation failed');
   }
+
+  const token = (await cookies()).get('token')?.value;
+  if (!token) throw new Error('Token not found');
+
+  await postLeaveApplication(token, formDataInput);
+
+  revalidatePath('/leave-applications');
+  redirect('/leave-applications');
 };
