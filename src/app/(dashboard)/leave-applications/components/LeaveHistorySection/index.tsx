@@ -7,7 +7,11 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import Select from '@/components/Select';
 import Dropdown from '@/components/Dropdown';
-import { deleteLeaveApplication } from '@/api/leaveApplications';
+import {
+  deleteLeaveApplication,
+  exportLeaveApplications,
+} from '@/api/leaveApplications';
+import { triggerDownload } from '@/utils/download';
 
 const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   /**
@@ -64,6 +68,15 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
       router.refresh();
     } catch (error) {
       console.error('Delete failed', error);
+    }
+  };
+
+  const handleExport = async (format: 'pdf' | 'csv' | 'excel') => {
+    try {
+      const blob = await exportLeaveApplications(format);
+      triggerDownload(blob, `leave_applications.${format}`);
+    } catch (error) {
+      console.error('Export failed', error);
     }
   };
 
@@ -137,9 +150,18 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
             buttonClassName="flex items-center rounded p-2 bg-[#3F861E] text-white hover:bg-green flex gap-8 text-lg rounded-[14px] py-3 px-11 shadow-[11px_4px_14px_0px_#0000001F]"
             icon={<ArrowDownCircleIcon width={19} height={19} />}
             actions={[
-              { label: 'Export PDF', onClick: () => {} },
-              { label: 'Export CSV', onClick: () => {} },
-              { label: 'Export Excel', onClick: () => {} },
+              {
+                label: 'Export PDF',
+                onClick: () => handleExport('pdf'),
+              },
+              {
+                label: 'Export CSV',
+                onClick: () => handleExport('csv'),
+              },
+              {
+                label: 'Export Excel',
+                onClick: () => handleExport('excel'),
+              },
             ]}
           />
         </div>

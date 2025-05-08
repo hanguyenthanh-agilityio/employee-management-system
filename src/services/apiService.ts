@@ -98,3 +98,24 @@ export const deleteLeave = async (token: string, id: string) => {
 
   return res;
 };
+
+// Export Leave Applications
+export const exportLeave = async (
+  token: string,
+  format: 'pdf' | 'csv' | 'excel',
+): Promise<Blob> => {
+  console.log('Calling export API:', format);
+
+  const res = await fetch(`${API_URL}/leave-applications/download/${format}/`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to export leave applications as ${format}`);
+  }
+
+  return res.blob();
+};

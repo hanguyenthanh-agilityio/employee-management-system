@@ -6,6 +6,7 @@ import {
   postLeaveApplication,
   patchLeaveApplication,
   deleteLeave,
+  exportLeave,
 } from '@/services/apiService';
 import { LeaveApplication } from '@/types/components';
 import { getTokenFromCookies } from '@/utils/auth';
@@ -13,6 +14,7 @@ import { leaveApplicationSchema } from '@/utils/schemas/leaveApplicationSchema';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+// Get Leave Applications
 export const fetchLeaveApplications = async () => {
   const token = await getTokenFromCookies();
 
@@ -83,4 +85,18 @@ export const deleteLeaveApplication = async (id: string) => {
   const token = await getTokenFromCookies();
   await deleteLeave(token, id);
   revalidatePath('/leave-applications');
+};
+
+// Export Leave Applications
+export const exportLeaveApplications = async (
+  format: 'pdf' | 'csv' | 'excel',
+) => {
+  console.log('Export started:', format);
+
+  const token = await getTokenFromCookies();
+  const blob = await exportLeave(token, format);
+
+  console.log(`Exported ${format}`, blob);
+
+  return blob;
 };
