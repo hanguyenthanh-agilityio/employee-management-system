@@ -1,9 +1,14 @@
-const Homepage = () => {
-  return (
-    <main className="container mx-auto">
-      <h1 className="text-lg font-semibold">This is homepage</h1>
-    </main>
-  );
-};
+'use client';
 
-export default Homepage;
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/login/');
+  }, [router]);
+
+  return null;
+}
