@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/Button';
 
 const actions = [
-  'Apply for Leave',
+  'Leave Applications',
   'KPI Goals',
   'Take Appraisal',
   'View Payslip',
@@ -18,7 +18,7 @@ const QuickActions = () => {
   const router = useRouter();
 
   const handleClick = (action: string) => {
-    const path = `/dashboard/${format(action)}`;
+    const path = `/${format(action)}`;
     router.push(path);
   };
 
