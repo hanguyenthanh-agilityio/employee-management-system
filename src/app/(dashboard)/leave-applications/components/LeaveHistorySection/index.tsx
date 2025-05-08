@@ -2,7 +2,6 @@
 
 import { ArrowDownCircleIcon } from '@heroicons/react/16/solid';
 import GenericTable from '../LeaveHistoryTable';
-import { Button } from '@/components/Button';
 import { LeaveItem } from '@/types/components';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
@@ -97,6 +96,7 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
       title: 'Actions',
       render: (row: LeaveItem) => (
         <Dropdown
+          buttonClassName="rounded-lg gap-2 bg-[#253D90] text-white font-bold px-6 py-2 text-sm hover:bg-blue-800 transition-all duration-200 ease-in-out"
           actions={[
             {
               label: 'Edit',
@@ -132,13 +132,16 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
             }))}
           />
 
-          <Button
-            variant="export"
-            customClass="flex gap-8 text-lg rounded-[14px] py-3 px-11 shadow-[11px_4px_14px_0px_#0000001F]"
-          >
-            Export
-            <ArrowDownCircleIcon width={19} height={19} />
-          </Button>
+          <Dropdown
+            buttonLabel="Export"
+            buttonClassName="flex items-center rounded p-2 bg-[#3F861E] text-white hover:bg-green flex gap-8 text-lg rounded-[14px] py-3 px-11 shadow-[11px_4px_14px_0px_#0000001F]"
+            icon={<ArrowDownCircleIcon width={19} height={19} />}
+            actions={[
+              { label: 'Export PDF', onClick: () => {} },
+              { label: 'Export CSV', onClick: () => {} },
+              { label: 'Export Excel', onClick: () => {} },
+            ]}
+          />
         </div>
       </div>
       <GenericTable data={filteredData} columns={columns} />
