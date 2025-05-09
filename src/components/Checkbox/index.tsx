@@ -4,9 +4,10 @@ interface CheckboxProps {
   className?: string;
   subLabel?: string;
   subClassName?: string;
+  name?: string;
 }
 
-const Checkbox = ({ label, id, subLabel }: CheckboxProps) => {
+const Checkbox = ({ label, id, subLabel, name }: CheckboxProps) => {
   return (
     <label
       htmlFor={id}
@@ -14,6 +15,7 @@ const Checkbox = ({ label, id, subLabel }: CheckboxProps) => {
     >
       <input
         type="checkbox"
+        name={name}
         id={id}
         className="form-checkbox w-[20px] h-[20px] text-[#CBB4B4]"
       />

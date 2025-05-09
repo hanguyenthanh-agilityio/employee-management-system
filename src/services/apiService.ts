@@ -1,4 +1,43 @@
 import { API_URL } from '@/constants/api_url';
+import { LoginInput, RegisterInput } from '@/utils/schemas/authSchema';
+
+// Login
+export const login = async (data: LoginInput) => {
+  const res = await fetch(`${API_URL}/accounts/login/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || 'Login failed');
+  }
+
+  return res.json();
+};
+
+// Register
+export const register = async (data: RegisterInput) => {
+  const res = await fetch(`${API_URL}/accounts/register/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || 'Register failed');
+  }
+
+  return res.json();
+};
 
 // Get Leave Applications
 export const getLeaveApplications = async (token: string) => {
