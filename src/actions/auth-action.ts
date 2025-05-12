@@ -1,6 +1,6 @@
 'use server';
 
-import { login, register } from '@/services/apiService';
+import { activateAccount, login, register } from '@/services/apiService';
 import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
 import { cookies } from 'next/headers';
 
@@ -98,6 +98,31 @@ export const registerAction = async (_: unknown, formData: FormData) => {
         err instanceof Error
           ? err.message
           : 'Unknown error during registration',
+    };
+  }
+};
+
+// Activate Account
+export const activateAction = async (_: unknown, formData: FormData) => {
+  const uid = formData.get('uid')?.toString();
+  const token = formData.get('token')?.toString();
+
+  if (!uid || !token) {
+    return { success: false, message: 'Missing activation credentials.' };
+  }
+
+  try {
+    const result = await activateAccount({ uid, token });
+
+    return {
+      success: true,
+      message: result.message || 'Account activated successfully!',
+    };
+  } catch (err) {
+    console.error('Activation error:', err);
+    return {
+      success: false,
+      message: err instanceof Error ? err.message : 'Unknown activation error',
     };
   }
 };

@@ -1,8 +1,11 @@
 // Constants
-import { API_URL } from '@/constants/api_url';
+import { API_URL, NEXT_PUBLIC_API_URL } from '@/constants/api_url';
 import { LoginInput, RegisterInput } from '@/utils/schemas/authSchema';
 
-// Login
+// Utils
+import { getTokenFromCookies } from '@/utils/auth';
+
+// Fetch API Login
 export const login = async (data: LoginInput) => {
   const res = await fetch(`${API_URL}/accounts/login/`, {
     method: 'POST',
@@ -21,7 +24,7 @@ export const login = async (data: LoginInput) => {
   return res.json();
 };
 
-// Register
+// Fetch API Register
 export const register = async (data: RegisterInput) => {
   const res = await fetch(`${API_URL}/accounts/register/`, {
     method: 'POST',
@@ -40,8 +43,23 @@ export const register = async (data: RegisterInput) => {
   return res.json();
 };
 
-// Utils
-import { getTokenFromCookies } from '@/utils/auth';
+// Fetch API Activate Account
+export const activateAccount = async (data: { uid: string; token: string }) => {
+  const res = await fetch(`${NEXT_PUBLIC_API_URL}/activate/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || 'Activation failed');
+  }
+
+  return res.json();
+};
 
 // Get Leave Applications
 export const getLeaveApplications = async () => {
