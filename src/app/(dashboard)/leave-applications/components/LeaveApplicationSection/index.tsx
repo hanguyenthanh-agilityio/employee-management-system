@@ -1,7 +1,15 @@
 'use client';
 
-import LeaveCard from '../LeaveApplicationCard';
 import { useRouter } from 'next/navigation';
+
+// Constants
+import { ENDPOINT_LEAVE } from '@/constants/api-endpoint';
+
+// Utils
+import { formatTitleToPath } from '@/utils/format';
+
+// Components
+import LeaveCard from '../LeaveApplicationCard';
 
 const leaves = [
   { title: 'Annual Leave', days: 60 },
@@ -12,11 +20,12 @@ const leaves = [
 
 const LeaveApplicationSection = () => {
   const router = useRouter();
-  const format = (text: string) => text.toLowerCase().replace(/\s+/g, '-');
 
-  const handleClick = (title: string) => {
-    const path = `/leave-applications/${format(title)}`;
-    router.push(path);
+  const handleClick = (title: string): (() => void) => {
+    return () => {
+      const path = `${ENDPOINT_LEAVE}/${formatTitleToPath(title)}`;
+      router.push(path);
+    };
   };
 
   return (
@@ -27,9 +36,7 @@ const LeaveApplicationSection = () => {
             key={index}
             title={leave.title}
             days={leave.days}
-            onClick={() => {
-              handleClick(leave.title);
-            }}
+            onClick={handleClick(leave.title)}
           />
         ))}
       </div>

@@ -1,17 +1,22 @@
 'use client';
 
-import { ArrowDownCircleIcon } from '@heroicons/react/16/solid';
-import GenericTable from '../LeaveHistoryTable';
-import { LeaveItem } from '@/types/components';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
+
+// Components
+import GenericTable from '../LeaveHistoryTable';
 import Select from '@/components/Select';
-import Dropdown from '@/components/Dropdown';
+
+// Types
+import { LeaveItem } from '@/types/components';
+
 import {
   deleteLeaveApplication,
   exportLeaveApplications,
 } from '@/api/leaveApplications';
 import { triggerDownload } from '@/utils/download';
+import ExportDropdown from '@/components/ExportDropdown';
+import ActionsDropdown from '@/components/ActionDropdown';
 
 const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   /**
@@ -60,15 +65,24 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   const handleFilterChange = (e: { target: { value: string } }) =>
     handleChange(e.target.value);
 
-  // Handle delete Leave Application
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteLeaveApplication(id);
+  // Handle edit Leave Application
+  const handleEdit = (id: string): (() => void) => {
+    return () => {
+      router.push(`/leave-applications/${id}/edit`);
+    };
+  };
 
-      router.refresh();
-    } catch (error) {
-      console.error('Delete failed', error);
-    }
+  // Handle delete Leave Application
+  const handleDelete = (id: string): (() => void) => {
+    return async () => {
+      try {
+        await deleteLeaveApplication(id);
+
+        router.refresh();
+      } catch (error) {
+        console.error('Delete failed', error);
+      }
+    };
   };
 
   const handleExport = async (format: 'pdf' | 'csv' | 'excel') => {
@@ -108,20 +122,9 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     {
       title: 'Actions',
       render: (row: LeaveItem) => (
-        <Dropdown
-          buttonClassName="rounded-lg gap-2 bg-[#253D90] text-white font-bold px-6 py-2 text-sm hover:bg-blue-800 transition-all duration-200 ease-in-out"
-          actions={[
-            {
-              label: 'Edit',
-              onClick: () => router.push(`/leave-applications/${row.id}/edit`),
-              textClass: 'text-blue-600',
-            },
-            {
-              label: 'Delete',
-              onClick: () => handleDelete(row.id),
-              textClass: 'text-red-600',
-            },
-          ]}
+        <ActionsDropdown
+          onEdit={handleEdit(row.id)}
+          onDelete={handleDelete(row.id)}
         />
       ),
       className: 'flex justify-center',
@@ -133,6 +136,7 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
       <div className="flex justify-between items-center px-5">
         <h3 className="text-[25px] text-[#000] font-bold">Leave History</h3>
         <div className="flex items-center py-6 gap-10">
+          {/* Filter by Type */}
           <Select
             label="Filter by Type:"
             name="type"
@@ -145,27 +149,12 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
             }))}
           />
 
-          <Dropdown
-            buttonLabel="Export"
-            buttonClassName="flex items-center rounded p-2 bg-[#3F861E] text-white hover:bg-green flex gap-8 text-lg rounded-[14px] py-3 px-11 shadow-[11px_4px_14px_0px_#0000001F]"
-            icon={<ArrowDownCircleIcon width={19} height={19} />}
-            actions={[
-              {
-                label: 'Export PDF',
-                onClick: () => handleExport('pdf'),
-              },
-              {
-                label: 'Export CSV',
-                onClick: () => handleExport('csv'),
-              },
-              {
-                label: 'Export Excel',
-                onClick: () => handleExport('excel'),
-              },
-            ]}
-          />
+          {/* Dropdown Export file */}
+          <ExportDropdown onExport={handleExport} />
         </div>
       </div>
+
+      {/* Leave History table */}
       <GenericTable data={filteredData} columns={columns} />
     </div>
   );
