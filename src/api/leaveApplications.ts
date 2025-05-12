@@ -1,20 +1,37 @@
 'use server';
 
-import {
-  getLeaveApplications,
-  postLeaveApplication,
-} from '@/services/apiService';
-import { LeaveApplication } from '@/types/components';
-import { leaveApplicationSchema } from '@/utils/schemas/leaveApplicationSchema';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export const fetchLeaveApplications = async () => {
-  const token = (await cookies()).get('token')?.value;
-  if (!token) throw new Error('Token not found');
+// Constants
+import { ENDPOINT_LEAVE } from '@/constants/api-endpoint';
 
-  const data: LeaveApplication = await getLeaveApplications(token);
+// Services
+import {
+  getLeaveApplicationById,
+  getLeaveApplications,
+  postLeaveApplication,
+  patchLeaveApplication,
+  deleteLeave,
+  exportLeave,
+} from '@/services/apiService';
+
+// Types
+import { LeaveApplication } from '@/types/components';
+
+// Utils
+import { leaveApplicationSchema } from '@/utils/schemas/leaveApplicationSchema';
+
+// Get Leave Applications
+export const fetchLeaveApplications = async () => {
+  const data: LeaveApplication = await getLeaveApplications();
+  return data;
+};
+
+// Get Leave Application by ID
+export const fetchLeaveApplicationById = async (id: string) => {
+  const data = await getLeaveApplicationById(id);
+
   return data;
 };
 
@@ -34,11 +51,52 @@ export const createLeaveApplication = async (formDataInput: FormData) => {
     throw new Error('Validation failed');
   }
 
-  const token = (await cookies()).get('token')?.value;
-  if (!token) throw new Error('Token not found');
+  await postLeaveApplication(formDataInput);
 
-  await postLeaveApplication(token, formDataInput);
+  revalidatePath(ENDPOINT_LEAVE);
+  redirect(ENDPOINT_LEAVE);
+};
 
-  revalidatePath('/leave-applications');
-  redirect('/leave-applications');
+// Update Leave Application
+export const updateLeaveApplication = async (
+  id: string,
+  formDataInput: FormData,
+) => {
+  const rawData = {
+    leaveType: formDataInput.get('leaveType')?.toString(),
+    startDate: formDataInput.get('startDate')?.toString(),
+    endDate: formDataInput.get('endDate')?.toString(),
+    durations: formDataInput.get('durations')?.toString() || '0',
+    resumptionDate: formDataInput.get('resumptionDate')?.toString(),
+    reason: formDataInput.get('reason')?.toString(),
+  };
+
+  const parsed = leaveApplicationSchema.safeParse(rawData);
+  if (!parsed.success) {
+    throw new Error('Validation failed');
+  }
+
+  await patchLeaveApplication(id, formDataInput);
+
+  revalidatePath(ENDPOINT_LEAVE);
+  redirect(ENDPOINT_LEAVE);
+};
+
+// Delete Leave Application
+export const deleteLeaveApplication = async (id: string) => {
+  await deleteLeave(id);
+  revalidatePath(ENDPOINT_LEAVE);
+};
+
+// Export Leave Applications
+export const exportLeaveApplications = async (
+  format: 'pdf' | 'csv' | 'excel',
+) => {
+  console.log('Export started:', format);
+
+  const blob = await exportLeave(format);
+
+  console.log(`Exported ${format}`, blob);
+
+  return blob;
 };

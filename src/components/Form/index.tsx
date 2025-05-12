@@ -3,11 +3,14 @@
 import Input from '../Input';
 // import Select from '../Select';
 import { Button } from '../Button';
+import { LeaveItem } from '@/types/components';
 
 const Form = ({
   defaultLeaveType = 'Annual Leave',
+  leave,
 }: {
   defaultLeaveType?: string;
+  leave?: LeaveItem;
 }) => {
   return (
     <>
@@ -16,7 +19,7 @@ const Form = ({
         name="leaveType"
         labelClassName="text-[25px] text-[#1D1D1D]"
         inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
-        defaultValue={defaultLeaveType}
+        defaultValue={leave?.type || defaultLeaveType}
         readOnly
       />
 
@@ -27,6 +30,7 @@ const Form = ({
           type="date"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          defaultValue={leave?.startDate}
           required
         />
         <Input
@@ -35,6 +39,7 @@ const Form = ({
           type="date"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          defaultValue={leave?.endDate}
           required
         />
       </div>
@@ -46,6 +51,7 @@ const Form = ({
           type="number"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          defaultValue={leave?.durations}
           required
         />
         <Input
@@ -54,6 +60,7 @@ const Form = ({
           type="date"
           labelClassName="text-[25px] text-[#1D1D1D]"
           inputClassName="my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]"
+          defaultValue={leave?.resumptionDate}
           required
         />
       </div>
@@ -64,6 +71,7 @@ const Form = ({
           name="reason"
           className="bg-[#E3EDF9] mt-1 block w-full rounded-[9px] border px-4 py-2 text-[25px]"
           rows={2}
+          defaultValue={leave?.reason}
         />
       </div>
 
