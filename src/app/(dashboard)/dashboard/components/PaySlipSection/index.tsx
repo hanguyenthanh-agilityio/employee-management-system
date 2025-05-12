@@ -1,13 +1,7 @@
 import Card from '@/components/Card';
 import Table from '@/components/Table';
+import { payRows } from '@/constants/table';
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid';
-
-const payRows = [
-  ['Basic Wage', '150,000', '-30,000', '120,000'],
-  ['Tax', '15,000', '-3,000', '12,000'],
-  ['Pension', '15,000', '-3,000', '12,000'],
-  ['Total Earnings', '150,000', '-36,000', '114,000'],
-];
 
 const PaySlipSection = () => (
   <Card className="py-8 px-4">
