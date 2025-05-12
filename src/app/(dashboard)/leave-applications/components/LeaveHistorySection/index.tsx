@@ -6,17 +6,20 @@ import { useMemo } from 'react';
 // Components
 import GenericTable from '../LeaveHistoryTable';
 import Select from '@/components/Select';
+import ExportDropdown from '@/components/ExportDropdown';
+import ActionsDropdown from '@/components/ActionDropdown';
 
-// Types
-import { LeaveItem } from '@/types/components';
-
+// APIs
 import {
   deleteLeaveApplication,
   exportLeaveApplications,
 } from '@/api/leaveApplications';
+
+// Utils
 import { triggerDownload } from '@/utils/download';
-import ExportDropdown from '@/components/ExportDropdown';
-import ActionsDropdown from '@/components/ActionDropdown';
+
+// Types
+import { LeaveItem } from '@/types/components';
 
 const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   /**
@@ -85,6 +88,12 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     };
   };
 
+  /**
+   * HANDLE EXPORT LEAVE APPLICATIONS
+   * Get data blob from server
+   * File download trigger
+   * Handle error if export fails
+   */
   const handleExport = async (format: 'pdf' | 'csv' | 'excel') => {
     try {
       const blob = await exportLeaveApplications(format);

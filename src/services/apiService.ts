@@ -106,7 +106,13 @@ export const deleteLeave = async (id: string) => {
   return res;
 };
 
-// Export Leave Applications
+/**
+ * FETCH API EXPORT
+ * Get authentication token from cookies
+ * Call api to download export file in format
+ * Check if API error
+ * Returns blob data from server
+ */
 export const exportLeave = async (
   format: 'pdf' | 'csv' | 'excel',
 ): Promise<Blob> => {
