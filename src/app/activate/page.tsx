@@ -3,8 +3,10 @@ import ActivateForm from './activateForm';
 
 export default function ActivatePage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
-      <ActivateForm />
-    </Suspense>
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <Suspense fallback={<div>Loading...</div>}>
+        <ActivateForm />
+      </Suspense>
+    </div>
   );
 }
