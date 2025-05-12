@@ -1,5 +1,12 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
+// Constants
+import { ENDPOINT_LEAVE } from '@/constants/api-endpoint';
+
+// Services
 import {
   getLeaveApplicationById,
   getLeaveApplications,
@@ -8,24 +15,23 @@ import {
   deleteLeave,
   exportLeave,
 } from '@/services/apiService';
+
+// Types
 import { LeaveApplication } from '@/types/components';
-import { getTokenFromCookies } from '@/utils/auth';
+
+// Utils
 import { leaveApplicationSchema } from '@/utils/schemas/leaveApplicationSchema';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 // Get Leave Applications
 export const fetchLeaveApplications = async () => {
-  const token = await getTokenFromCookies();
-
-  const data: LeaveApplication = await getLeaveApplications(token);
+  const data: LeaveApplication = await getLeaveApplications();
   return data;
 };
 
 // Get Leave Application by ID
 export const fetchLeaveApplicationById = async (id: string) => {
-  const token = await getTokenFromCookies();
-  const data = await getLeaveApplicationById(token, id);
+  const data = await getLeaveApplicationById(id);
+
   return data;
 };
 
@@ -45,12 +51,10 @@ export const createLeaveApplication = async (formDataInput: FormData) => {
     throw new Error('Validation failed');
   }
 
-  const token = await getTokenFromCookies();
+  await postLeaveApplication(formDataInput);
 
-  await postLeaveApplication(token, formDataInput);
-
-  revalidatePath('/leave-applications');
-  redirect('/leave-applications');
+  revalidatePath(ENDPOINT_LEAVE);
+  redirect(ENDPOINT_LEAVE);
 };
 
 // Update Leave Application
@@ -72,19 +76,16 @@ export const updateLeaveApplication = async (
     throw new Error('Validation failed');
   }
 
-  const token = await getTokenFromCookies();
+  await patchLeaveApplication(id, formDataInput);
 
-  await patchLeaveApplication(token, id, formDataInput);
-
-  revalidatePath('/leave-applications');
-  redirect('/leave-applications');
+  revalidatePath(ENDPOINT_LEAVE);
+  redirect(ENDPOINT_LEAVE);
 };
 
 // Delete Leave Application
 export const deleteLeaveApplication = async (id: string) => {
-  const token = await getTokenFromCookies();
-  await deleteLeave(token, id);
-  revalidatePath('/leave-applications');
+  await deleteLeave(id);
+  revalidatePath(ENDPOINT_LEAVE);
 };
 
 // Export Leave Applications
@@ -93,8 +94,7 @@ export const exportLeaveApplications = async (
 ) => {
   console.log('Export started:', format);
 
-  const token = await getTokenFromCookies();
-  const blob = await exportLeave(token, format);
+  const blob = await exportLeave(format);
 
   console.log(`Exported ${format}`, blob);
 

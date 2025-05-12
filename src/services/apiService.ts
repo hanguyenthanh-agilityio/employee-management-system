@@ -1,3 +1,4 @@
+// Constants
 import { API_URL } from '@/constants/api_url';
 import { LoginInput, RegisterInput } from '@/utils/schemas/authSchema';
 
@@ -39,8 +40,13 @@ export const register = async (data: RegisterInput) => {
   return res.json();
 };
 
+// Utils
+import { getTokenFromCookies } from '@/utils/auth';
+
 // Get Leave Applications
-export const getLeaveApplications = async (token: string) => {
+export const getLeaveApplications = async () => {
+  const token = await getTokenFromCookies();
+
   const res = await fetch(`${API_URL}/leave-applications/`, {
     method: 'GET',
     next: { revalidate: 60 },
@@ -58,7 +64,9 @@ export const getLeaveApplications = async (token: string) => {
 };
 
 // Get leave application ID
-export const getLeaveApplicationById = async (token: string, id: string) => {
+export const getLeaveApplicationById = async (id: string) => {
+  const token = await getTokenFromCookies();
+
   const res = await fetch(`${API_URL}/leave-applications/${id}`, {
     method: 'GET',
     next: { revalidate: 60 },
@@ -76,10 +84,9 @@ export const getLeaveApplicationById = async (token: string, id: string) => {
 };
 
 // Create Leave Application
-export const postLeaveApplication = async (
-  token: string,
-  formData: FormData,
-) => {
+export const postLeaveApplication = async (formData: FormData) => {
+  const token = await getTokenFromCookies();
+
   const res = await fetch(`${API_URL}/leave-applications/`, {
     method: 'POST',
     next: { revalidate: 60 },
@@ -98,11 +105,9 @@ export const postLeaveApplication = async (
 };
 
 // Update Leave Applications
-export const patchLeaveApplication = async (
-  token: string,
-  id: string,
-  formData: FormData,
-) => {
+export const patchLeaveApplication = async (id: string, formData: FormData) => {
+  const token = await getTokenFromCookies();
+
   const res = await fetch(`${API_URL}/leave-applications/${id}/`, {
     method: 'PATCH',
     headers: {
@@ -120,7 +125,9 @@ export const patchLeaveApplication = async (
 };
 
 // Delete Leave Application
-export const deleteLeave = async (token: string, id: string) => {
+export const deleteLeave = async (id: string) => {
+  const token = await getTokenFromCookies();
+
   const res = await fetch(`${API_URL}/leave-applications/${id}/`, {
     method: 'DELETE',
     headers: {
@@ -138,11 +145,18 @@ export const deleteLeave = async (token: string, id: string) => {
   return res;
 };
 
-// Export Leave Applications
+/**
+ * FETCH API EXPORT
+ * Get authentication token from cookies
+ * Call api to download export file in format
+ * Check if API error
+ * Returns blob data from server
+ */
 export const exportLeave = async (
-  token: string,
   format: 'pdf' | 'csv' | 'excel',
 ): Promise<Blob> => {
+  const token = await getTokenFromCookies();
+
   console.log('Calling export API:', format);
 
   const res = await fetch(`${API_URL}/leave-applications/download/${format}/`, {
