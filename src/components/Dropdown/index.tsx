@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
 
 interface DropdownAction {
@@ -13,12 +13,14 @@ interface Props {
   actions: DropdownAction[];
   buttonLabel?: string;
   buttonClassName?: string;
+  icon?: ReactNode;
 }
 
 const Dropdown = ({
   actions,
   buttonLabel = 'Actions',
   buttonClassName = '',
+  icon,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,10 +30,10 @@ const Dropdown = ({
     <div className="relative inline-block text-left">
       <button
         onClick={toggleDropdown}
-        className={`flex items-center gap-2 bg-[#253D90] text-white font-bold px-6 py-2 rounded-lg text-sm hover:bg-blue-800 border border-[#253D90] transition-all duration-200 ease-in-out ${buttonClassName}`}
+        className={`flex items-center ${buttonClassName}`}
       >
         {buttonLabel}
-        <ChevronDownIcon className="w-4 h-4" />
+        {icon || <ChevronDownIcon className="w-4 h-4" />}
       </button>
       {isOpen && (
         <div className="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-lg bg-white shadow-lg ring-1 ring-gray-200 ring-opacity-60 focus:outline-none transition-all duration-200 ease-in-out">
