@@ -1,8 +1,65 @@
 // Constants
-import { API_URL } from '@/constants/api_url';
+import { API_URL, NEXT_PUBLIC_API_URL } from '@/constants/api_url';
+import { LoginInput, RegisterInput } from '@/utils/schemas/authSchema';
 
 // Utils
 import { getTokenFromCookies } from '@/utils/auth';
+
+// Fetch API Login
+export const login = async (data: LoginInput) => {
+  const res = await fetch(`${API_URL}/accounts/login/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || 'Login failed');
+  }
+
+  return res.json();
+};
+
+// Fetch API Register
+export const register = async (data: RegisterInput) => {
+  const res = await fetch(`${API_URL}/accounts/register/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || 'Register failed');
+  }
+
+  return res.json();
+};
+
+// Fetch API Activate Account
+export const activateAccount = async (data: { uid: string; token: string }) => {
+  const res = await fetch(`${NEXT_PUBLIC_API_URL}/activate/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || 'Activation failed');
+  }
+
+  return res.json();
+};
 
 // Get Leave Applications
 export const getLeaveApplications = async () => {

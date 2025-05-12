@@ -2,7 +2,7 @@ import { InputHTMLAttributes, ReactNode } from 'react';
 
 interface InputPros extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-
+  name?: string;
   labelClassName?: string;
   inputClassName?: string;
   icon?: ReactNode;
@@ -10,6 +10,7 @@ interface InputPros extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({
   label,
+  name,
   labelClassName,
   inputClassName,
   icon,
@@ -24,6 +25,7 @@ const Input = ({
       <input
         {...props}
         className={`w-full border-[2px] border-[#CBB4B4] ${inputClassName}`}
+        name={name}
       />
     </div>
   );
