@@ -6,7 +6,7 @@ import { Button } from '../Button';
 import { LeaveItem } from '@/types/components';
 
 const Form = ({
-  defaultLeaveType = 'Annual Leave',
+  defaultLeaveType,
   leave,
 }: {
   defaultLeaveType?: string;
