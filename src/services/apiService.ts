@@ -44,21 +44,18 @@ export const register = async (data: RegisterInput) => {
 };
 
 // Fetch API Activate Account
-export const activateAction = async (data: { uid: string; token: string }) => {
-  const res = await fetch(
-    `${API_URL}/accounts/activate/${data.uid}/${data.token}/`,
-    {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
+export const activateAccount = async (uid: string, token: string) => {
+  const res = await fetch(`${API_URL}/accounts/activate/${uid}/${token}/`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
     },
-  );
+  });
 
   const contentType = res.headers.get('content-type');
 
   if (!res.ok) {
-    if (contentType && contentType.includes('application/json')) {
+    if (contentType?.includes('application/json')) {
       const errorData = await res.json();
       throw new Error(errorData.message || 'Activation failed');
     } else {
@@ -69,11 +66,11 @@ export const activateAction = async (data: { uid: string; token: string }) => {
     }
   }
 
-  if (contentType && contentType.includes('application/json')) {
+  if (contentType?.includes('application/json')) {
     return res.json();
-  } else {
-    return { message: 'Activation response received, but not in JSON format.' };
   }
+
+  return { message: 'Activation response received, but not in JSON format.' };
 };
 
 // Get Leave Applications

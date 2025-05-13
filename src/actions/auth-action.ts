@@ -1,6 +1,6 @@
 'use server';
 
-import { login, register } from '@/services/apiService';
+import { activateAccount, login, register } from '@/services/apiService';
 import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
 import { cookies } from 'next/headers';
 
@@ -100,4 +100,8 @@ export const registerAction = async (_: unknown, formData: FormData) => {
           : 'Unknown error during registration',
     };
   }
+};
+
+export const activateAction = async (data: { uid: string; token: string }) => {
+  return await activateAccount(data.uid, data.token);
 };
