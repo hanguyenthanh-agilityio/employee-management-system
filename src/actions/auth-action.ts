@@ -102,6 +102,7 @@ export const registerAction = async (_: unknown, formData: FormData) => {
   }
 };
 
+// Activate Account
 export const activateAction = async (data: { uid: string; token: string }) => {
   return await activateAccount(data.uid, data.token);
 };

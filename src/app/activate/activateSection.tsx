@@ -16,13 +16,20 @@ const ActivateSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // Get UID and token from URL
   const uid = searchParams.get('uidb64') || '';
   const token = searchParams.get('token') || '';
 
+  // Loading state when call api
   const [loading, setLoading] = useState(false);
+
+  // Successful or not
   const [success, setSuccess] = useState(false);
+
+  // Message for error or success
   const [message, setMessage] = useState('');
 
+  // Handle click activate button
   const handleActivate = async () => {
     if (!uid || !token) {
       setMessage('Missing activation credentials.');
@@ -50,7 +57,7 @@ const ActivateSection = () => {
   if (!uid || !token) {
     return (
       <div className="text-center text-red-600 font-semibold p-4 bg-white rounded shadow-md">
-        The activation link is invalid or missing information.
+        The activation link is invalid.
       </div>
     );
   }
@@ -61,9 +68,7 @@ const ActivateSection = () => {
         <CheckCircleIcon className="w-12 h-12" />
         <h1 className="text-2xl font-bold">Activate your account</h1>
       </div>
-
       <p className="text-xl mt-8">Click the button below to confirm</p>
-
       <Button
         onClick={handleActivate}
         disabled={loading || success}
@@ -71,10 +76,9 @@ const ActivateSection = () => {
       >
         {loading ? 'ACTIVATING...' : 'ACTIVATE'}
       </Button>
-
       {message && (
         <p
-          className={`mt-4 text-lg ${
+          className={`mt-4 text-xl ${
             success ? 'text-green-600' : 'text-red-500'
           }`}
         >
