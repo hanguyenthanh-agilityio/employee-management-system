@@ -1,5 +1,5 @@
 // Constants
-import { API_URL } from '@/constants/api_url';
+import { API_URL, NEXT_PUBLIC_API_URL } from '@/constants/api_url';
 import { LoginInput, RegisterInput } from '@/utils/schemas/authSchema';
 
 // Utils
@@ -45,12 +45,15 @@ export const register = async (data: RegisterInput) => {
 
 // Fetch API Activate Account
 export const activateAccount = async (uid: string, token: string) => {
-  const res = await fetch(`${API_URL}/accounts/activate/${uid}/${token}/`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
+  const res = await fetch(
+    `${NEXT_PUBLIC_API_URL}/accounts/activate/${uid}/${token}/`,
+    {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
     },
-  });
+  );
 
   const contentType = res.headers.get('content-type');
 

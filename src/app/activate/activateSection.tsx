@@ -54,14 +54,6 @@ const ActivateSection = () => {
     }
   };
 
-  if (!uid || !token) {
-    return (
-      <div className="text-center text-red-600 font-semibold p-4 bg-white rounded shadow-md">
-        The activation link is invalid.
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col items-center text-center bg-white p-8 rounded-lg shadow-lg">
       <div className="flex items-center gap-4">
