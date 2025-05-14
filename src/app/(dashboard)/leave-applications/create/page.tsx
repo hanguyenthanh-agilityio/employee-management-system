@@ -1,11 +1,15 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { createLeaveApplication } from '@/api/leaveApplications';
 import Breadcrumbs from '@/components/Breadcrumb';
 import Form from '@/components/Form';
 import { BookOpenIcon } from '@heroicons/react/16/solid';
 
 const CreateLeavePage = () => {
+  const searchParams = useSearchParams();
+  const leaveTypeFromQuery = searchParams.get('type') || undefined;
+
   return (
     <>
       <Breadcrumbs paths={['Leave Applications', 'Annual Leave']} />
@@ -21,7 +25,7 @@ const CreateLeavePage = () => {
         </div>
 
         <form action={createLeaveApplication}>
-          <Form />
+          <Form defaultLeaveType={leaveTypeFromQuery} />
         </form>
       </div>
     </>

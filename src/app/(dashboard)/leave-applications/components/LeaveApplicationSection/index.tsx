@@ -23,7 +23,7 @@ const LeaveApplicationSection = () => {
 
   const handleClick = (title: string): (() => void) => {
     return () => {
-      const path = `${ENDPOINT_LEAVE}/${formatTitleToPath(title)}`;
+      const path = `${ENDPOINT_LEAVE}/create?type=${formatTitleToPath(title)}`;
       router.push(path);
     };
   };

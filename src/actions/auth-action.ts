@@ -52,6 +52,20 @@ export const loginAction = async (_: unknown, formData: FormData) => {
   }
 };
 
+// Logout action
+export const logoutAction = async () => {
+  const cookieStore = await cookies();
+
+  cookieStore.set('token', '', {
+    httpOnly: true,
+    secure: true,
+    path: '/',
+    maxAge: 0,
+  });
+
+  return { success: true };
+};
+
 // Register action
 export const registerAction = async (_: unknown, formData: FormData) => {
   const email = formData.get('email')?.toString();
