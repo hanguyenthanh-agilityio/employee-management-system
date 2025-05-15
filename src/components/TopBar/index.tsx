@@ -18,18 +18,16 @@ const TopBar = () => {
   };
 
   return (
-    <header className="relative bg-white shadow-sm px-6 pt-6 flex items-center justify-center">
+    <header className="bg-white shadow-sm px-4 py-4 flex justify-between items-center flex-wrap gap-y-4 md:px-6 md:py-6">
       {/* Left: Menu */}
-      <div className="flex gap-12">
-        <TopBarNav />
-      </div>
+      <TopBarNav />
 
       {/* Right: Icons */}
-      <div className="absolute right-[80px] bottom-[5px] flex gap-4 items-center">
+      <div className="flex gap-4 items-center">
         {/* Bell */}
         <div className="relative">
           <div className="w-9 h-9 bg-primary rounded-full flex items-center justify-center">
-            <BellIcon className="w-7 h-7 text-white" />
+            <BellIcon className="w-6 h-6 text-white" />
           </div>
           <span className="absolute -top-1 -right-1 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
             3
@@ -38,15 +36,15 @@ const TopBar = () => {
 
         {/* Mail */}
         <div className="relative">
-          <div className="w-9 h-9 rounded-full  bg-green-700 flex items-center justify-center">
-            <EnvelopeIcon className="w-6 h-6 text-white" />
+          <div className="w-9 h-9 bg-green-700 rounded-full flex items-center justify-center">
+            <EnvelopeIcon className="w-5 h-5 text-white" />
           </div>
           <span className="absolute -top-1 -right-1 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
             1
           </span>
         </div>
 
-        {/* Profile Dropdown  */}
+        {/* Profile Dropdown */}
         <ProfileDropdown onClick={handleLogout} />
       </div>
     </header>

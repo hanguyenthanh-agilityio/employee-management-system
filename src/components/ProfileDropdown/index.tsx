@@ -31,7 +31,7 @@ const ProfileDropdown = ({ onClick }: ProfileDropdownProps) => {
     <div className="relative" ref={ref}>
       <button
         onClick={handleClick}
-        className="w-9 h-9 rounded-full bg-yellow-400 flex items-center justify-center"
+        className="w-9 h-9 rounded-full bg-yellow flex items-center justify-center"
       >
         <UserCircleIcon className="w-6 h-6 text-white" />
       </button>

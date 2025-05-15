@@ -28,8 +28,8 @@ const GenericTable = <T,>({
 }: GenericTableProps<T>) => {
   return (
     <div className="overflow-x-auto w-full">
-      <table className="min-w-full bg-white rounded-lg shadow-sm text-xl">
-        <thead className="bg-[#E3EDF9] text-[#000] font-bold">
+      <table className="min-w-full bg-white rounded-lg shadow-sm text-sm md:text-base">
+        <thead className="bg-[#E3EDF9] text-black font-bold">
           <tr>
             {columns.map((col, index) => (
               <th key={index} className="px-4 py-5 whitespace-nowrap">
@@ -44,7 +44,7 @@ const GenericTable = <T,>({
               {columns.map((col, colIndex) => (
                 <td
                   key={colIndex}
-                  className={`px-4 py-3 whitespace-nowrap text-center ${col.className}`}
+                  className={`px-4 py-2 whitespace-nowrap text-center ${col.className ?? ''}`}
                 >
                   {col.render(item)}
                 </td>
@@ -54,11 +54,13 @@ const GenericTable = <T,>({
         </tbody>
       </table>
       {pagination && (
-        <Pagination
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
-          onPageChange={pagination.onPageChange}
-        />
+        <div className="mt-4">
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={pagination.onPageChange}
+          />
+        </div>
       )}
     </div>
   );

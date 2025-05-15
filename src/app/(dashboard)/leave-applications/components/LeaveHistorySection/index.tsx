@@ -158,17 +158,19 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   ];
 
   return (
-    <div>
-      <div className="flex justify-between items-center px-5">
-        <h3 className="text-[25px] text-[#000] font-bold">Leave History</h3>
-        <div className="flex items-center py-6 gap-10">
+    <>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center px-5 gap-4">
+        <h3 className="text-2xl md:text-[25px] font-bold text-black">
+          Leave History
+        </h3>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center py-6 gap-10">
           {/* Filter by Type */}
           <Select
             label="Filter by Type:"
             name="type"
             value={selectedType}
             onChange={handleFilterChange}
-            className="flex items-center justify-center text-lg"
+            className="flex items-center justify-center text-lg min-w-[180px]"
             options={leaveTypes.map((type) => ({
               value: type,
               label: type,
@@ -190,7 +192,7 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
           onPageChange: handlePageChange,
         }}
       />
-    </div>
+    </>
   );
 };
 
