@@ -19,7 +19,7 @@ const Checkbox = ({ label, id, subLabel, name }: CheckboxProps) => {
         id={id}
         className="form-checkbox w-[20px] h-[20px] text-[#CBB4B4]"
       />
-      <span className="text-xl text-[#8F8F8F]">
+      <span className="text-sm md:text-xl text-[#8F8F8F]">
         {label}
         {subLabel && <span className="text-[#253D90]">{subLabel}</span>}
       </span>
