@@ -1,5 +1,6 @@
 'use client';
 
+import Pagination from '@/components/Pagination';
 import { ReactNode } from 'react';
 
 interface Column<T> {
@@ -8,12 +9,23 @@ interface Column<T> {
   className?: string;
 }
 
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
 interface GenericTableProps<T> {
   data: T[];
   columns: Column<T>[];
+  pagination?: PaginationProps;
 }
 
-const GenericTable = <T,>({ data, columns }: GenericTableProps<T>) => {
+const GenericTable = <T,>({
+  data,
+  columns,
+  pagination,
+}: GenericTableProps<T>) => {
   return (
     <div className="overflow-x-auto w-full">
       <table className="min-w-full bg-white rounded-lg shadow-sm text-xl">
@@ -41,6 +53,13 @@ const GenericTable = <T,>({ data, columns }: GenericTableProps<T>) => {
           ))}
         </tbody>
       </table>
+      {pagination && (
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={pagination.onPageChange}
+        />
+      )}
     </div>
   );
 };

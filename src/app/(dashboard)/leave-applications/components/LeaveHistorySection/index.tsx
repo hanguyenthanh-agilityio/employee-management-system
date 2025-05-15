@@ -32,6 +32,8 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   const pathname = usePathname();
 
   const selectedType = searchParams.get('type') || 'All';
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
+  const ITEMS_PER_PAGE = 5;
 
   /**
    * Render data when filter by type
@@ -41,6 +43,13 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     if (selectedType === 'All') return data;
     return data.filter((item) => item.type === selectedType);
   }, [data, selectedType]);
+
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredData.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredData, currentPage]);
 
   /**
    * Generate a list of leave type form data
@@ -62,6 +71,14 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     } else {
       params.set('type', type);
     }
+
+    params.set('page', '1');
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', page.toString());
     router.push(`${pathname}?${params.toString()}`);
   };
 
@@ -164,7 +181,15 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
       </div>
 
       {/* Leave History table */}
-      <GenericTable data={filteredData} columns={columns} />
+      <GenericTable
+        data={paginatedData}
+        columns={columns}
+        pagination={{
+          currentPage,
+          totalPages,
+          onPageChange: handlePageChange,
+        }}
+      />
     </div>
   );
 };
