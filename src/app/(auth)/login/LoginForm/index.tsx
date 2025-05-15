@@ -92,10 +92,10 @@ const LoginForm = () => {
 
   return (
     <>
-      <h1 className="text-[50px] md:text-[56px] font-semibold text-[#253D90] mb-2">
+      <h1 className="text-6xl md:text-7xl font-semibold text-primary mb-2">
         Login
       </h1>
-      <p className="text-lg md:text-[30px] text-[#969696] my-6">
+      <p className="text-xl md:text-3xl text-muted my-6">
         Login to your account
       </p>
 
@@ -106,11 +106,11 @@ const LoginForm = () => {
             label="E-mail Address"
             type="email"
             placeholder="Enter your email"
-            labelClassName="block text-lg md:text-xl font-bold mb-3 text-[#253D90]"
-            inputClassName={`w-full rounded-md px-4 py-2 text-[#253D90] shadow focus:outline-none focus:ring-2 ${
+            labelClassName="block text-lg md:text-xl font-bold mb-3 text-primary"
+            inputClassName={`w-full rounded-md px-4 py-2 text-primary shadow focus:outline-none focus:ring-2 ${
               state.fieldErrors.email
                 ? 'border border-red-500 focus:ring-red-300'
-                : 'focus:ring-[#0A50C2]/30'
+                : 'focus:ring-secondary/30'
             }`}
           />
           {state.fieldErrors.email && (
@@ -126,11 +126,11 @@ const LoginForm = () => {
             label="Password"
             type="password"
             placeholder="Enter your password"
-            labelClassName="block text-lg md:text-xl font-bold mb-3 text-[#253D90]"
-            inputClassName={`w-full rounded-md px-4 py-2 text-[#253D90] shadow focus:outline-none focus:ring-2 ${
+            labelClassName="block text-lg md:text-xl font-bold mb-3 text-primary"
+            inputClassName={`w-full rounded-md px-4 py-2 text-primary shadow focus:outline-none focus:ring-2 ${
               state.fieldErrors.password
                 ? 'border border-red-500 focus:ring-red-300'
-                : 'focus:ring-[#0A50C2]/30'
+                : 'focus:ring-secondary/30'
             }`}
           />
           {state.fieldErrors.password && (
@@ -144,7 +144,7 @@ const LoginForm = () => {
           <Checkbox label="Remember me" id="remember" />
           <Link
             href="/reset-password"
-            className="text-[#253D90] font-bold hover:underline"
+            className="text-primary font-bold hover:underline"
           >
             Reset Password?
           </Link>
@@ -164,11 +164,11 @@ const LoginForm = () => {
           {isPending ? 'Signing In...' : 'Sign In'}
         </Button>
 
-        <p className="text-center text-lg md:text-xl text-[#8F8F8F] mt-6">
+        <p className="text-center text-lg md:text-xl text-Gray56 mt-6">
           Don’t have an account yet?{' '}
           <Link
             href="/register"
-            className="text-[#253D90] font-bold hover:underline"
+            className="text-primary font-bold hover:underline"
           >
             Join KRIS today
           </Link>

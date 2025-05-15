@@ -15,7 +15,7 @@ const birthdays = [
 const BirthdaySection = () => (
   <Card className="py-8 px-4">
     <div className="flex justify-between items-start">
-      <h2 className="font-bold text-[#545559] text-3xl pl-4">Birthdays</h2>
+      <h2 className="font-bold text-cyanBlue text-3xl pl-4">Birthdays</h2>
       <EllipsisVerticalIcon className="text-[#000] w-7 h-7" />
     </div>
     <div className="flex flex-col gap-4 py-10">

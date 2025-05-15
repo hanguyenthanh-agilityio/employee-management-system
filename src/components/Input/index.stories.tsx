@@ -25,9 +25,9 @@ const meta = {
     label: 'E-mail Address',
     name: 'name',
     type: 'text',
-    labelClassName: 'block text-xl font-bold mb-3 text-[#253D90]',
+    labelClassName: 'block text-xl font-bold mb-3 text-primary',
     inputClassName:
-      'rounded-md px-4 py-2 text-[#253D90] shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-[#0A50C2]/30',
+      'rounded-md px-4 py-2 text-primary shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-secondary/30',
   },
 } satisfies Meta<typeof Input>;
 
@@ -43,7 +43,7 @@ export const WithDefaultValue: Story = {
     label: 'Start Date',
     name: 'startDate',
     type: 'date',
-    labelClassName: 'text-[25px] text-[#1D1D1D]',
+    labelClassName: 'text-2xl text-darkText',
     inputClassName: 'my-5 bg-[#E3EDF9] text-xl border-none p-3 rounded-[9px]',
     defaultValue: '10-10-2025',
   },

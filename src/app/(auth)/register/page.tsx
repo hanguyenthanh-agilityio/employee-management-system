@@ -43,10 +43,10 @@ const RegisterPage = () => {
 
   return (
     <>
-      <h1 className="text-4xl sm:text-[56px] font-semibold text-[#253D90] mb-2 leading-[normal]">
+      <h1 className="text-5xl sm:text-7xl font-semibold text-primary mb-2 leading-[normal]">
         Welcome to XCELTECH
       </h1>
-      <p className="text-xl sm:text-[30px] text-[#969696] my-4 sm:my-6">
+      <p className="text-xl sm:text-3xl text-muted my-4 sm:my-6">
         Register your account
       </p>
 
@@ -60,8 +60,8 @@ const RegisterPage = () => {
             label={field.label}
             name={field.name}
             type={field.type}
-            labelClassName="block text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-[#253D90]"
-            inputClassName="rounded-md px-4 py-2 text-[#253D90] shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-[#0A50C2]/30"
+            labelClassName="block text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-primary"
+            inputClassName="rounded-md px-4 py-2 text-primary shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-secondary/30"
           />
         ))}
 
@@ -87,9 +87,9 @@ const RegisterPage = () => {
         </div>
       </form>
 
-      <p className="text-lg sm:text-xl text-[#8F8F8F] mt-6 sm:mt-8">
+      <p className="text-lg sm:text-xl text-Gray56 mt-6 sm:mt-8">
         Already have an account?{' '}
-        <Link href="/login" className="text-[#253D90] font-bold">
+        <Link href="/login" className="text-primary font-bold">
           Log In
         </Link>
       </p>

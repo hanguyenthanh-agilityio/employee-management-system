@@ -6,7 +6,7 @@ interface TableProps {
 export default function Table({ headers, rows }: TableProps) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-xl text-left text-[#545559] min-w-[500px] border-separate border-spacing-y-3">
+      <table className="w-full text-xl text-left text-cyanBlue min-w-[500px] border-separate border-spacing-y-3">
         <thead className="bg-[#E3EDF9] h-[60px]">
           <tr>
             {headers.map((head, index) => (

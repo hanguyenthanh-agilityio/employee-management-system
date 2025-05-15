@@ -7,7 +7,7 @@ interface ProfileSectionProps {
 }
 
 const ProfileSection = ({ name, jobTitle }: ProfileSectionProps) => (
-  <div className="flex flex-col justify-between bg-[#253D90] rounded-lg text-white py-4 pl-4 sm:pl-8 sm:py-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+  <div className="flex flex-col justify-between bg-primary rounded-lg text-white py-4 pl-4 sm:pl-8 sm:py-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
     <div className="flex items-center">
       <Image src="/profile.png" alt="profile" width={130} height={130} />
       <div className="pl-6">
@@ -19,7 +19,7 @@ const ProfileSection = ({ name, jobTitle }: ProfileSectionProps) => (
       <div>
         <Button
           variant="secondary"
-          customClass="text-[25px] px-14 py-4 rounded-[10px] font-bold w-full sm:w-auto text-center"
+          customClass="text-2xl px-14 py-4 rounded-[10px] font-bold w-full sm:w-auto text-center"
         >
           Edit Profile
         </Button>

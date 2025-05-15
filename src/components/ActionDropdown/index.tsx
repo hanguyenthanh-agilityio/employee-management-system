@@ -8,7 +8,7 @@ type LeaveActionsDropdownProps = {
 const ActionsDropdown = ({ onEdit, onDelete }: LeaveActionsDropdownProps) => {
   return (
     <Dropdown
-      buttonClassName="rounded-lg gap-2 bg-[#253D90] text-white font-bold px-6 py-2 text-sm hover:bg-blue-800 transition-all duration-200 ease-in-out"
+      buttonClassName="rounded-lg gap-2 bg-primary text-white font-bold px-6 py-2 text-sm hover:bg-blue-800 transition-all duration-200 ease-in-out"
       actions={[
         {
           label: 'Edit',

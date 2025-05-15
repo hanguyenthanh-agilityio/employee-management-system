@@ -27,8 +27,8 @@ const TopBarNav = () => {
             className={clsx(
               'text-xl font-medium transition-colors duration-200',
               isActive
-                ? 'text-[#253D90] border-b-2 border-yellow-400 pb-3'
-                : 'text-gray-600 hover:text-[#253D90]',
+                ? 'text-primary border-b-2 border-yellow-400 pb-3'
+                : 'text-gray-600 hover:text-primary',
             )}
           >
             {item.name}

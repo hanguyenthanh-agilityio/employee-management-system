@@ -24,7 +24,7 @@ const Input = ({
       </label>
       <input
         {...props}
-        className={`w-full border-[2px] border-[#CBB4B4] ${inputClassName}`}
+        className={`w-full border-[2px] border-mediumLightGray ${inputClassName}`}
         name={name}
       />
     </div>

@@ -10,18 +10,18 @@ const LoginLayout = ({ children }: AuthLayoutProps) => {
       {/* Banner First on Mobile, Second on Desktop */}
       <div className="relative w-full h-96 md:h-full order-1 md:order-2">
         {/* Overlay */}
-        <div className="absolute inset-0 bg-[#253D90] bg-[url(/login-banner.png)] bg-blend-multiply bg-cover bg-center bg-no-repeat z-10" />
+        <div className="absolute inset-0 bg-primary bg-[url(/login-banner.png)] bg-blend-multiply bg-cover bg-center bg-no-repeat z-10" />
 
         {/* Content */}
         <div className="relative z-20 flex items-end justify-start p-6 sm:p-8 text-white h-full">
           <div className="space-y-6">
             <h2 className="font-bold text-3xl sm:text-4xl md:text-[40px] leading-snug pb-10 md:pb-20">
-              Manage all <span className="text-[#FFC20E]">HR Operations</span>
+              Manage all <span className="text-yellow">HR Operations</span>
               <br />
               from the comfort of your home.
             </h2>
             <div className="flex gap-3 pt-10 md:pt-20">
-              <span className="w-16 md:w-20 h-2 md:h-3 bg-[#FFC20E] rounded-full" />
+              <span className="w-16 md:w-20 h-2 md:h-3 bg-yellow rounded-full" />
               <span className="w-16 md:w-20 h-2 md:h-3 bg-white rounded-full" />
               <span className="w-16 md:w-20 h-2 md:h-3 bg-white rounded-full" />
             </div>
