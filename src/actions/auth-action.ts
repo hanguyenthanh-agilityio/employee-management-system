@@ -1,15 +1,23 @@
 'use server';
 
-import { activateAccount, login, register } from '@/services/apiService';
-import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
 import { cookies } from 'next/headers';
 
-// Login action
+// Services
+import { activateAccount, login, register } from '@/services/apiService';
+
+// Utils
+import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
+import { loginForm, registerForm } from '@/utils/validate';
+
+/**
+ * LOGIN ACTION
+ * Get data from FormData
+ * Validate by Zod. safeParse: return object
+ * Call API /account/login/
+ * Save access token in Cookie
+ */
 export const loginAction = async (_: unknown, formData: FormData) => {
-  const fields = {
-    email: formData.get('email'),
-    password: formData.get('password'),
-  };
+  const fields = loginForm(formData);
 
   const parsed = loginSchema.safeParse(fields);
 
@@ -31,11 +39,16 @@ export const loginAction = async (_: unknown, formData: FormData) => {
     }
 
     const cookieStore = await cookies();
+
     cookieStore.set('token', data.access, {
+      // Secure - not readable by java
       httpOnly: true,
+      // Works only over HTTPS
       secure: true,
+      // Applies to entire site
       path: '/',
-      maxAge: 60 * 60 * 24 * 7,
+      // Lasts for 12 hours
+      maxAge: 60 * 60 * 12,
     });
 
     return { success: true };
@@ -68,22 +81,9 @@ export const logoutAction = async () => {
 
 // Register action
 export const registerAction = async (_: unknown, formData: FormData) => {
-  const email = formData.get('email')?.toString();
-  const username = email?.split('@')[0] || '';
-
   console.log('Form values:', Object.fromEntries(formData.entries()));
 
-  const fields = {
-    email,
-    username,
-    firstName: formData.get('firstName'),
-    lastName: formData.get('lastName'),
-    phone: formData.get('phone'),
-    password: formData.get('password'),
-    confirmPassword: formData.get('confirmPassword'),
-    role: 'admin',
-    isReceiveNewsletters: formData.get('newsletter') === 'on',
-  };
+  const fields = registerForm(formData);
 
   const parsed = registerSchema.safeParse(fields);
 
