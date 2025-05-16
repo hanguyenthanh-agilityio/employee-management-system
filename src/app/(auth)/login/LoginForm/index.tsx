@@ -18,6 +18,7 @@ import { Button } from '@/components/Button';
 
 // Utils
 import { loginSchema } from '@/utils/schemas/authSchema';
+import { loginForm } from '@/utils/validate';
 
 const initialState = {
   success: false,
@@ -28,19 +29,18 @@ const initialState = {
   },
 };
 
+// State type definition
 type State = typeof initialState;
 
+// form logic
 const validatedLoginAction = async (
   _: State,
   formData: FormData,
 ): Promise<State> => {
-  const raw = {
-    email: formData.get('email')?.toString() || '',
-    password: formData.get('password')?.toString() || '',
-  };
+  const fields = loginForm(formData);
 
   try {
-    loginSchema.parse(raw);
+    loginSchema.parse(fields);
 
     const result = await loginAction(undefined, formData);
 
@@ -109,7 +109,7 @@ const LoginForm = () => {
             labelClassName="block text-lg md:text-xl font-bold mb-3 text-primary"
             inputClassName={`w-full rounded-md px-4 py-2 text-primary shadow focus:outline-none focus:ring-2 ${
               state.fieldErrors.email
-                ? 'border border-red-500 focus:ring-red-300'
+                ? 'border border-red focus:ring-red'
                 : 'focus:ring-secondary/30'
             }`}
           />
@@ -129,12 +129,12 @@ const LoginForm = () => {
             labelClassName="block text-lg md:text-xl font-bold mb-3 text-primary"
             inputClassName={`w-full rounded-md px-4 py-2 text-primary shadow focus:outline-none focus:ring-2 ${
               state.fieldErrors.password
-                ? 'border border-red-500 focus:ring-red-300'
+                ? 'border border-red focus:ring-red'
                 : 'focus:ring-secondary/30'
             }`}
           />
           {state.fieldErrors.password && (
-            <p className="text-red-600 text-sm mt-1">
+            <p className="text-red text-sm mt-1">
               {state.fieldErrors.password}
             </p>
           )}
