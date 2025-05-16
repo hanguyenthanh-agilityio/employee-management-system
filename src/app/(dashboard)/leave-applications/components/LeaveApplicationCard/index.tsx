@@ -9,21 +9,23 @@ interface LeaveCardProps {
 const LeaveCard = ({ title, days, onClick }: LeaveCardProps) => {
   return (
     <div
-      className="cursor-pointer transition hover:scale-[1.03] rounded-2xl p-5 bg-blue-900 text-white shadow-md flex flex-col items-center gap-4 h-full"
+      className="min-w-[250px] sm:min-w-[280px] md:min-w-[300px] bg-blue-900 text-white rounded-xl p-4 flex items-center gap-4 shadow transition hover:scale-105 cursor-pointer"
       onClick={onClick}
     >
-      <div className="bg-white text-blue-900 text-5xl w-28 h-28 rounded-full flex items-center justify-center font-bold">
+      <div className="w-[70px] h-[70px] md:w-[100px] md:h-[100px] rounded-full bg-white text-blue-900 text-4xl font-bold flex items-center justify-center shrink-0">
         {days}
       </div>
-      <div className="text-center text-xl font-semibold truncate w-full px-2">
-        {title}
+      <div className="flex flex-col flex-1">
+        <div className="text-base md:text-lg font-medium truncate pb-2 text-center truncate w-[140px]">
+          {title}
+        </div>
+        <Button
+          variant="secondary"
+          customClass="text-sm md:text-base font-bold justify-center px-1 md:px-6 py-1 rounded-full bg-yellow-400 text-black"
+        >
+          Apply
+        </Button>
       </div>
-      <Button
-        variant="secondary"
-        customClass="text-base font-bold justify-center px-16 py-1.5 rounded-full"
-      >
-        Apply
-      </Button>
     </div>
   );
 };

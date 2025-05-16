@@ -11,10 +11,12 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div className="bg-[#E6EEF9] min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <TopBar />
-      <main className="flex-grow container mx-auto px-4 sm:px-8 py-8">
-        {children}
+      <main className="bg-[#E6EEF9]">
+        <div className="flex-grow container mx-auto px-4 sm:px-8 py-8">
+          {children}
+        </div>
       </main>
     </div>
   );

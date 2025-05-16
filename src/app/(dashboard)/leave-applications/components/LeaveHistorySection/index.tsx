@@ -159,11 +159,11 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center px-5 gap-4">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center px-0 md:px-5 gap-4 pt-8 pb-4 md:pt-10">
         <h3 className="text-2xl md:text-[25px] font-bold text-black">
           Leave History
         </h3>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center py-6 gap-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-10">
           {/* Filter by Type */}
           <Select
             label="Filter by Type:"
