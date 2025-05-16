@@ -27,6 +27,8 @@ const config: Config = {
         success: '#22C55E',
         yellow: '#FFC20E',
         cyanBlue: '#545559',
+        darkGreen: '#3F861E',
+        red: '#F50707',
       },
       fontSize: {
         xs: ['0.75rem', '1rem'], // 12px

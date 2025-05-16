@@ -14,7 +14,7 @@ const ExportDropdown = ({ onExport }: ExportDropdownProps) => {
   return (
     <Dropdown
       buttonLabel="Export"
-      buttonClassName="flex items-center rounded p-2 bg-[#3F861E] text-white hover:bg-green flex gap-8 text-lg rounded-[14px] py-3 px-11 shadow-[11px_4px_14px_0px_#0000001F]"
+      buttonClassName="flex items-center gap-2 rounded-md px-4 py-2 bg-green-700 text-white hover:bg-green-800 text-base shadow-md"
       icon={<ArrowDownCircleIcon width={19} height={19} />}
       actions={[
         {

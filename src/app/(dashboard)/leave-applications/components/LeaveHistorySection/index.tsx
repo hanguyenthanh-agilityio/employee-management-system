@@ -32,6 +32,8 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   const pathname = usePathname();
 
   const selectedType = searchParams.get('type') || 'All';
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
+  const ITEMS_PER_PAGE = 5;
 
   /**
    * Render data when filter by type
@@ -41,6 +43,13 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     if (selectedType === 'All') return data;
     return data.filter((item) => item.type === selectedType);
   }, [data, selectedType]);
+
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+
+  const paginatedData = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredData.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredData, currentPage]);
 
   /**
    * Generate a list of leave type form data
@@ -62,6 +71,14 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     } else {
       params.set('type', type);
     }
+
+    params.set('page', '1');
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', page.toString());
     router.push(`${pathname}?${params.toString()}`);
   };
 
@@ -141,17 +158,19 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   ];
 
   return (
-    <div>
-      <div className="flex justify-between items-center px-5">
-        <h3 className="text-[25px] text-[#000] font-bold">Leave History</h3>
-        <div className="flex items-center py-6 gap-10">
+    <>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center px-0 md:px-5 gap-4 pt-8 pb-4 md:pt-10">
+        <h3 className="text-2xl md:text-[25px] font-bold text-black">
+          Leave History
+        </h3>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 md:gap-10">
           {/* Filter by Type */}
           <Select
             label="Filter by Type:"
             name="type"
             value={selectedType}
             onChange={handleFilterChange}
-            className="flex items-center justify-center text-lg"
+            className="flex items-center justify-center text-lg min-w-[180px]"
             options={leaveTypes.map((type) => ({
               value: type,
               label: type,
@@ -164,8 +183,16 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
       </div>
 
       {/* Leave History table */}
-      <GenericTable data={filteredData} columns={columns} />
-    </div>
+      <GenericTable
+        data={paginatedData}
+        columns={columns}
+        pagination={{
+          currentPage,
+          totalPages,
+          onPageChange: handlePageChange,
+        }}
+      />
+    </>
   );
 };
 

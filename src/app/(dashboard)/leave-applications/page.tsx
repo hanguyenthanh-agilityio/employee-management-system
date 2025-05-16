@@ -14,8 +14,8 @@ const ApplyForLeavePage = async () => {
     <>
       <Breadcrumbs paths={['Dashboard', 'Leave Applications']} />
       <div className="bg-white">
-        <div className="p-8">
-          <h2 className="flex item-center gap-4 text-3xl text-[#1D1D1D] px-5 py-8">
+        <div className="p-6 md:p-8">
+          <h2 className="flex item-center gap-4 text-3xl text-[#1D1D1D] px-0 md:px-5 py-8">
             <BookOpenIcon width={34} height={34} />
             Leave Application
           </h2>

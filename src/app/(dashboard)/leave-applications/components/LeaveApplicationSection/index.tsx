@@ -29,8 +29,8 @@ const LeaveApplicationSection = () => {
   };
 
   return (
-    <div className="overflow-x-auto w-full">
-      <div className="flex flex-wrap gap-4 justify-start w-max mb-3">
+    <div className="w-full px-0 overflow-x-auto">
+      <div className="flex gap-4 w-max sm:w-full">
         {leaves.map((leave, index) => (
           <LeaveCard
             key={index}
