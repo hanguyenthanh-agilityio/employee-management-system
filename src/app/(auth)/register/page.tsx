@@ -43,14 +43,16 @@ const RegisterPage = () => {
 
   return (
     <>
-      <h1 className="text-[56px] font-semibold text-[#253D90] mb-2">
+      <h1 className="text-5xl sm:text-7xl font-semibold text-primary mb-2 leading-[normal]">
         Welcome to XCELTECH
       </h1>
-      <p className="text-[30px] text-[#969696] my-6">Register your account</p>
+      <p className="text-xl sm:text-3xl text-muted my-4 sm:my-6">
+        Register your account
+      </p>
 
       <form
         action={formAction}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
       >
         {inputFields.map((field, index) => (
           <Input
@@ -58,13 +60,12 @@ const RegisterPage = () => {
             label={field.label}
             name={field.name}
             type={field.type}
-            labelClassName="block text-xl font-bold mb-3 text-[#253D90]"
-            inputClassName="rounded-md px-4 py-2 text-[#253D90]
-              shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-[#0A50C2]/30"
+            labelClassName="block text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-primary"
+            inputClassName="rounded-md px-4 py-2 text-primary shadow-[5px_2px_10px_3px_rgba(0,0,0,0.05)] focus:outline-none focus:ring-2 focus:ring-secondary/30"
           />
         ))}
 
-        <div className="col-span-2 space-y-2 pt-4">
+        <div className="col-span-1 md:col-span-2 space-y-2 pt-4">
           {checkboxes.map((cb) => (
             <Checkbox
               key={cb.id}
@@ -76,17 +77,19 @@ const RegisterPage = () => {
           ))}
         </div>
 
-        <Button
-          type="submit"
-          customClass="max-w-[300px] justify-center py-3 text-xl my-2"
-        >
-          Create Account
-        </Button>
+        <div className="col-span-1 md:col-span-2">
+          <Button
+            type="submit"
+            customClass="w-full sm:max-w-[300px] justify-center py-2 md:py-3 text-lg sm:text-xl my-2"
+          >
+            Create Account
+          </Button>
+        </div>
       </form>
 
-      <p className="text-xl text-[#8F8F8F] mt-8">
-        Already have an account?
-        <Link href="/login" className="text-[#253D90] font-bold">
+      <p className="text-lg sm:text-xl text-Gray56 mt-6 sm:mt-8">
+        Already have an account?{' '}
+        <Link href="/login" className="text-primary font-bold">
           Log In
         </Link>
       </p>

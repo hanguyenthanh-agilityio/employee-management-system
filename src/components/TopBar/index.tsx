@@ -28,10 +28,10 @@ const TopBar = () => {
       <div className="absolute right-[80px] bottom-[5px] flex gap-4 items-center">
         {/* Bell */}
         <div className="relative">
-          <div className="w-9 h-9 bg-[#253D90] rounded-full flex items-center justify-center">
-            <BellIcon className="w-7 h-7 text-white " />
+          <div className="w-9 h-9 bg-primary rounded-full flex items-center justify-center">
+            <BellIcon className="w-7 h-7 text-white" />
           </div>
-          <span className="absolute -top-1 -right-1 text-[10px] bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
+          <span className="absolute -top-1 -right-1 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
             3
           </span>
         </div>
@@ -41,7 +41,7 @@ const TopBar = () => {
           <div className="w-9 h-9 rounded-full  bg-green-700 flex items-center justify-center">
             <EnvelopeIcon className="w-6 h-6 text-white" />
           </div>
-          <span className="absolute -top-1 -right-1 text-[10px] bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
+          <span className="absolute -top-1 -right-1 text-xs bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
             1
           </span>
         </div>

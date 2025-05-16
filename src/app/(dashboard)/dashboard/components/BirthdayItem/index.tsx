@@ -14,7 +14,7 @@ export default function BirthdayItem({
 }: BirthdayItemProps) {
   return (
     <div className="flex justify-between items-center bg-[#EAF1FB] px-6 py-3 rounded-xl shadow-sm">
-      <div className="flex items-center gap-2 text-[#545559] text-xl">
+      <div className="flex items-center gap-2 text-cyanBlue text-xl">
         <CalendarDateRangeIcon className="w-7 h-7" />
         <span>
           {name}’s Day - {date}

@@ -13,13 +13,25 @@ export type LoginInput = z.infer<typeof loginSchema>;
 
 export const registerSchema = z
   .object({
-    email: z.string().email(),
+    email: z.string().email({
+      message: 'Invalid email',
+    }),
     username: z.string().min(3),
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
-    phone: z.string().min(6),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6),
+    firstName: z.string().min(1, {
+      message: 'First name is required',
+    }),
+    lastName: z.string().min(1, {
+      message: 'Last name is required',
+    }),
+    phone: z.string().min(6, {
+      message: 'Phone number is required',
+    }),
+    password: z.string().min(6, {
+      message: 'Password must be at least 6 characters',
+    }),
+    confirmPassword: z.string().min(6, {
+      message: 'Confirm Password is required',
+    }),
     role: z.enum(['admin', 'user']),
     isReceiveNewsletters: z.boolean(),
   })

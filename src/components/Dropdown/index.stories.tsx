@@ -37,7 +37,7 @@ export const WithAction: Story = {
   args: {
     buttonLabel: 'Action',
     buttonClassName:
-      'rounded-lg gap-2 bg-[#253D90] text-white font-bold px-6 py-2 text-sm hover:bg-blue-800 transition-all duration-200 ease-in-out',
+      'rounded-lg gap-2 bg-primary text-white font-bold px-6 py-2 text-sm hover:bg-blue-800 transition-all duration-200 ease-in-out',
     actions: [
       {
         label: 'Edit',
