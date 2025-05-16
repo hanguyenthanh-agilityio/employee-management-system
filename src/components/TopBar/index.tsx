@@ -1,14 +1,28 @@
 'use client';
 
+import { useState } from 'react';
+import { startTransition } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+// Icons
+import {
+  BellIcon,
+  EnvelopeIcon,
+  Bars3Icon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
+
+// Actions
+import { logoutAction } from '@/actions/auth-action';
+
+// Components
 import TopBarNav from '../TopBarNav';
 import ProfileDropdown from '../ProfileDropdown';
-import { BellIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
-import { startTransition } from 'react';
-import { logoutAction } from '@/actions/auth-action';
-import { useRouter } from 'next/navigation';
 
 const TopBar = () => {
   const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
     startTransition(async () => {
@@ -18,11 +32,11 @@ const TopBar = () => {
   };
 
   return (
-    <header className="relative flex-grow container mx-auto bg-white shadow-sm px-4 py-4 flex justify-center items-center flex-wrap gap-20 gap-y-4 md:px-6 md:py-6">
-      {/* Left: Menu */}
-      <TopBarNav />
-
-      {/* Right: Icons */}
+    <header className="relative flex-grow container mx-auto bg-white shadow-sm px-4 py-4 flex items-center justify-between lg:justify-center sm:px-8 sm:py-6">
+      <div className="hidden lg:flex gap-12">
+        <TopBarNav />
+      </div>
+      {/* Right Icons */}
       <div className="absolute right-10 flex gap-4 items-center">
         {/* Bell */}
         <div className="relative">
@@ -47,6 +61,27 @@ const TopBar = () => {
         {/* Profile Dropdown */}
         <ProfileDropdown onClick={handleLogout} />
       </div>
+
+      {/* Hamburger for small screens */}
+      <div className="lg:hidden">
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="text-gray-700 focus:outline-none"
+        >
+          {isMenuOpen ? (
+            <XMarkIcon className="w-6 h-6" />
+          ) : (
+            <Bars3Icon className="w-6 h-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Dropdown Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-white shadow-md z-10 flex flex-col items-start p-4 lg:hidden gap-3">
+          <TopBarNav />
+        </div>
+      )}
     </header>
   );
 };
