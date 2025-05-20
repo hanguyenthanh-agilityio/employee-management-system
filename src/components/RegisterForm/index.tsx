@@ -11,6 +11,7 @@ import { ROUTER } from '@/constants/router';
 import Input from '@/components/Common/Input';
 import Checkbox from '@/components/Common/Checkbox';
 import { Button } from '@/components/Button';
+import { toast } from 'react-toastify';
 
 const inputFields = [
   { label: 'First Name', name: 'firstName' },
@@ -53,9 +54,10 @@ const RegisterForm = () => {
   const onSubmit = async (data: RegisterInput) => {
     const result = await registerAction(data);
     if (result.success) {
+      toast.success('Account created successfully!');
       router.push(ROUTER.LOGIN);
     } else {
-      alert(result.message || 'Registration failed.');
+      toast.error(result.message || 'Registration failed.');
     }
   };
 
@@ -105,9 +107,6 @@ const RegisterForm = () => {
               )}
             </div>
           ))}
-          {errors.terms && (
-            <p className="text-red text-sm mt-1">{errors.terms.message}</p>
-          )}
         </div>
 
         <div className="col-span-1 md:col-span-2">

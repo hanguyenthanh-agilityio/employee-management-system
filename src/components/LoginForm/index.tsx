@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+// REact Toast
+import { toast } from 'react-toastify';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -13,14 +16,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginAction } from '@/actions/auth-action';
 
 // Components
-
 import { Button } from '@/components/Button';
+import Input from '../Common/Input';
+import Checkbox from '../Common/Checkbox';
 
 // Utils
 import { LoginInput, loginSchema } from '@/utils/schemas/authSchema';
 
-import Input from '../Common/Input';
-import Checkbox from '../Common/Checkbox';
+// Constants
+import { ROUTER } from '@/constants/router';
+import { ERROR_MESSAGE } from '@/constants/error';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -41,9 +46,11 @@ const LoginForm = () => {
     const result = await loginAction(undefined, data);
 
     if (result.success) {
-      router.push('/leave-applications');
+      toast.success('Account login successfully!');
+      router.push(ROUTER.LEAVE_APPLICATION);
     } else {
-      setServerError(result.message || 'Login failed');
+      setServerError(result.message || ERROR_MESSAGE.LOGIN_FAILED);
+      toast.error(result.message || ERROR_MESSAGE.LOGIN_FAILED);
     }
   };
   return (
