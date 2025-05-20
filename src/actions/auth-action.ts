@@ -6,8 +6,12 @@ import { cookies } from 'next/headers';
 import { activateAccount, login, register } from '@/services/apiService';
 
 // Utils
-import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
-import { loginForm, registerForm } from '@/utils/validate';
+import {
+  LoginInput,
+  loginSchema,
+  registerSchema,
+} from '@/utils/schemas/authSchema';
+import { registerForm } from '@/utils/validate';
 
 // Constants
 import { ERROR_MESSAGE } from '@/constants/error';
@@ -20,8 +24,8 @@ import { SUCCESS_MESSAGES } from '@/constants/success';
  * Call API /account/login/
  * Save access token in Cookie
  */
-export const loginAction = async (_: unknown, formData: FormData) => {
-  const fields = loginForm(formData);
+export const loginAction = async (_: unknown, formData: LoginInput) => {
+  const fields = formData;
 
   const parsed = loginSchema.safeParse(fields);
 
