@@ -8,9 +8,9 @@ import { payRows } from '@/constants/table';
 
 // Component
 import Card from '.';
-import BirthdayItem from '@/app/(dashboard)/dashboard/components/BirthdayItem';
 import ProgressBar from '../ProgressBar';
 import Table from '../Table';
+import BirthdayItem from '@/components/BirthdayItem';
 
 const meta = {
   title: 'Components/Card',

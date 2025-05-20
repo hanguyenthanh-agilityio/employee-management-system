@@ -18,7 +18,7 @@ import { logoutAction } from '@/actions/auth-action';
 
 // Components
 import TopBarNav from '../TopBarNav';
-import ProfileDropdown from '../ProfileDropdown';
+import ProfileDropdown from '../../ProfileDropdown';
 
 const TopBar = () => {
   const router = useRouter();
@@ -32,7 +32,7 @@ const TopBar = () => {
   };
 
   return (
-    <header className="relative flex-grow container mx-auto bg-white shadow-sm px-4 py-4 flex items-center justify-between lg:justify-center sm:px-8 sm:py-6">
+    <header className="relative max-h-[80px] flex-grow container mx-auto bg-white shadow-sm px-4 py-4 flex items-center justify-between lg:justify-center sm:px-8 sm:py-6">
       <div className="hidden lg:flex gap-12">
         <TopBarNav />
       </div>

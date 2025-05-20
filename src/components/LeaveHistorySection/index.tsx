@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 // Components
 import GenericTable from '../LeaveHistoryTable';
-import Select from '@/components/Select';
+import Select from '@/components/Common/Select';
 import ExportDropdown from '@/components/ExportDropdown';
 import ActionsDropdown from '@/components/ActionDropdown';
 

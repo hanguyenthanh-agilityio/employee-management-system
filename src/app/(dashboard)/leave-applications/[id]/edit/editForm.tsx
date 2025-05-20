@@ -1,7 +1,7 @@
 'use client';
 
 import { updateLeaveApplication } from '@/api/leaveApplications';
-import Form from '@/components/Form';
+import Form from '@/components/Common/Form';
 import { LeaveItem } from '@/types/components';
 
 interface EditFormProps {

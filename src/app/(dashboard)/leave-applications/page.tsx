@@ -1,9 +1,16 @@
-import Breadcrumbs from '@/components/Breadcrumb';
-import LeaveHistorySection from './components/LeaveHistorySection';
+// Icons
 import { BookOpenIcon } from '@heroicons/react/16/solid';
-import LeaveApplicationSection from './components/LeaveApplicationSection';
+
+// APIs
 import { fetchLeaveApplications } from '@/api/leaveApplications';
+
+// Types
 import { LeaveItem } from '@/types/components';
+
+// Components
+import Breadcrumbs from '@/components/Common/Breadcrumb';
+import LeaveApplicationSection from '@/components/LeaveApplicationSection';
+import LeaveHistorySection from '@/components/LeaveHistorySection';
 
 const ApplyForLeavePage = async () => {
   const data = await fetchLeaveApplications();

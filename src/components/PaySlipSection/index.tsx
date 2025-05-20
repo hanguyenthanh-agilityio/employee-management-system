@@ -1,5 +1,5 @@
-import Card from '@/components/Card';
-import Table from '@/components/Table';
+import Card from '@/components/Common/Card';
+import Table from '@/components/Common/Table';
 import { payRows } from '@/constants/table';
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid';
 

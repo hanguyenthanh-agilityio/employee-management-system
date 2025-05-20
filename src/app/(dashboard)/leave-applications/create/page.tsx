@@ -2,8 +2,8 @@
 
 import { useSearchParams } from 'next/navigation';
 import { createLeaveApplication } from '@/api/leaveApplications';
-import Breadcrumbs from '@/components/Breadcrumb';
-import Form from '@/components/Form';
+import Breadcrumbs from '@/components/Common/Breadcrumb';
+import Form from '@/components/Common/Form';
 import { BookOpenIcon } from '@heroicons/react/16/solid';
 
 const CreateLeavePage = () => {

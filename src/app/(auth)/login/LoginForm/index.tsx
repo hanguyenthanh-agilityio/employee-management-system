@@ -12,8 +12,8 @@ import { ZodError } from 'zod';
 import { loginAction } from '@/actions/auth-action';
 
 // Components
-import Input from '@/components/Input';
-import Checkbox from '@/components/Checkbox';
+import Input from '@/components/Common/Input';
+import Checkbox from '@/components/Common/Checkbox';
 import { Button } from '@/components/Button';
 
 // Utils

@@ -1,5 +1,5 @@
-import Card from '@/components/Card';
-import ProgressBar from '@/components/ProgressBar';
+import Card from '@/components/Common/Card';
+import ProgressBar from '@/components/Common/ProgressBar';
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid';
 
 const leaveData = [

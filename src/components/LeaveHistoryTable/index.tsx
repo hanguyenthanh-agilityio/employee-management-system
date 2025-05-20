@@ -1,7 +1,9 @@
 'use client';
 
-import Pagination from '@/components/Pagination';
 import { ReactNode } from 'react';
+
+// Components
+import Pagination from '@/components/Common/Pagination';
 
 interface Column<T> {
   title: string;

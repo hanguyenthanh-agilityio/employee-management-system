@@ -15,8 +15,8 @@ import { registerSchema } from '@/utils/schemas/authSchema';
 
 // Components
 import { Button } from '@/components/Button';
-import Checkbox from '@/components/Checkbox';
-import Input from '@/components/Input';
+import Checkbox from '@/components/Common/Checkbox';
+import Input from '@/components/Common/Input';
 import { registerForm } from '@/utils/validate';
 
 const inputFields = [

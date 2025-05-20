@@ -2,7 +2,7 @@
 
 import { EllipsisVerticalIcon } from '@heroicons/react/16/solid';
 import BirthdayItem from '../BirthdayItem';
-import Card from '@/components/Card';
+import Card from '@/components/Common/Card';
 
 const birthdays = [
   { name: 'biruk kidan', date: 'April 25th' },
