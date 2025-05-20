@@ -9,9 +9,8 @@ import { activateAccount, login, register } from '@/services/apiService';
 import {
   LoginInput,
   loginSchema,
-  registerSchema,
+  RegisterInput,
 } from '@/utils/schemas/authSchema';
-import { registerForm } from '@/utils/validate';
 
 // Constants
 import { ERROR_MESSAGE } from '@/constants/error';
@@ -86,22 +85,9 @@ export const logoutAction = async () => {
 };
 
 // Register action
-export const registerAction = async (_: unknown, formData: FormData) => {
-  console.log('Form values:', Object.fromEntries(formData.entries()));
-
-  const fields = registerForm(formData);
-
-  const parsed = registerSchema.safeParse(fields);
-
-  if (!parsed.success) {
-    return {
-      success: false,
-      message: parsed.error.errors.map((e) => e.message).join(', '),
-    };
-  }
-
+export const registerAction = async (data: RegisterInput) => {
   try {
-    const response = await register(parsed.data);
+    const response = await register(data);
 
     return {
       success: true,

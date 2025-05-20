@@ -1,27 +1,16 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
-
-import Link from 'next/link';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-// Zod
-import { ZodError } from 'zod';
-
-// Actions
 import { registerAction } from '@/actions/auth-action';
-
-// Utils
-import { registerSchema } from '@/utils/schemas/authSchema';
-import { registerForm } from '@/utils/validate';
-
-// Components
-import { Button } from '@/components/Button';
-import Checkbox from '@/components/Common/Checkbox';
-import Input from '@/components/Common/Input';
-
-// Constants
+import { registerSchema, RegisterInput } from '@/utils/schemas/authSchema';
 import { ROUTER } from '@/constants/router';
+
+import Input from '@/components/Common/Input';
+import Checkbox from '@/components/Common/Checkbox';
+import { Button } from '@/components/Button';
 
 const inputFields = [
   { label: 'First Name', name: 'firstName' },
@@ -33,119 +22,68 @@ const inputFields = [
 ];
 
 const checkboxes = [
-  { id: 'newsletter', label: 'Yes, I want to receive KRIS newsletters' },
+  {
+    id: 'newsletter',
+    label: 'Yes, I want to receive KRIS newsletters',
+    name: 'newsletter',
+  },
   {
     id: 'terms',
     label: 'I agree to all the ',
     subLabel: 'Terms, Privacy Policy',
+    name: 'terms',
   },
 ];
 
 const RegisterForm = () => {
   const router = useRouter();
 
-  const initialState = {
-    success: false,
-    message: '',
-    fieldErrors: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      password: '',
-      confirmPassword: '',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch,
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      newsletter: false,
     },
-  };
-
-  type State = typeof initialState;
-
-  const validatedRegisterAction = async (
-    _: State,
-    formData: FormData,
-  ): Promise<State> => {
-    const field = registerForm(formData);
-
-    try {
-      registerSchema.parse(field);
-
-      const result = await registerAction(undefined, formData);
-
-      return {
-        success: result.success,
-        message: result.message || '',
-        fieldErrors: initialState.fieldErrors,
-      };
-    } catch (err) {
-      if (err instanceof ZodError) {
-        const fieldErrors = err.flatten().fieldErrors;
-
-        return {
-          success: false,
-          message: 'Please fix the errors below.',
-          fieldErrors: {
-            firstName: fieldErrors.firstName?.[0] || '',
-            lastName: fieldErrors.lastName?.[0] || '',
-            email: fieldErrors.email?.[0] || '',
-            phone: fieldErrors.phone?.[0] || '',
-            password: fieldErrors.password?.[0] || '',
-            confirmPassword: fieldErrors.confirmPassword?.[0] || '',
-          },
-        };
-      }
-
-      return {
-        success: false,
-        message: 'Unknown error occurred.',
-        fieldErrors: initialState.fieldErrors,
-      };
-    }
-  };
-
-  const [state, formAction, isPending] = useActionState(
-    validatedRegisterAction,
-    initialState,
-  );
-  useEffect(() => {
-    if (state.success) {
-      router.push(ROUTER.LOGIN);
-    }
-  }, [state.success, router]);
-
-  const [agreements, setAgreements] = useState({
-    newsletter: false,
-    terms: false,
   });
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setAgreements((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
+  const onSubmit = async (data: RegisterInput) => {
+    const result = await registerAction(data);
+    if (result.success) {
+      router.push(ROUTER.LOGIN);
+    } else {
+      alert(result.message || 'Registration failed.');
+    }
   };
+
+  const watchedNewsletter = watch('newsletter');
+  const watchedTerms = watch('terms');
 
   return (
     <>
       <form
-        action={formAction}
+        onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
       >
-        {inputFields.map((field, index) => (
-          <div key={index}>
+        {inputFields.map((field) => (
+          <div key={field.name}>
             <Input
               label={field.label}
-              name={field.name}
               type={field.type}
-              labelClassName="block text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-primary"
+              {...register(field.name as keyof RegisterInput)}
               inputClassName={`rounded-md px-4 py-2 text-primary shadow focus:outline-none focus:ring-2 ${
-                state.fieldErrors[field.name as keyof State['fieldErrors']]
+                errors[field.name as keyof RegisterInput]
                   ? 'border border-red focus:ring-red'
                   : 'focus:ring-secondary/30'
               }`}
+              labelClassName="block text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-primary"
             />
-            {state.fieldErrors[field.name as keyof State['fieldErrors']] && (
+            {errors[field.name as keyof RegisterInput]?.message && (
               <p className="text-red text-sm mt-1">
-                {state.fieldErrors[field.name as keyof State['fieldErrors']]}
+                {errors[field.name as keyof RegisterInput]?.message}
               </p>
             )}
           </div>
@@ -153,35 +91,35 @@ const RegisterForm = () => {
 
         <div className="col-span-1 md:col-span-2 space-y-2 pt-4">
           {checkboxes.map((cb) => (
-            <Checkbox
-              key={cb.id}
-              name={cb.id}
-              id={cb.id}
-              label={cb.label}
-              subLabel={cb.subLabel}
-              checked={agreements[cb.id as keyof typeof agreements]}
-              onChange={handleCheckboxChange}
-            />
+            <div key={cb.id}>
+              <Checkbox
+                id={cb.id}
+                label={cb.label}
+                subLabel={cb.subLabel}
+                {...register(cb.name as keyof RegisterInput)}
+              />
+              {errors[cb.name as keyof RegisterInput] && (
+                <p className="text-red text-sm mt-1">
+                  {errors[cb.name as keyof RegisterInput]?.message}
+                </p>
+              )}
+            </div>
           ))}
+          {errors.terms && (
+            <p className="text-red text-sm mt-1">{errors.terms.message}</p>
+          )}
         </div>
 
         <div className="col-span-1 md:col-span-2">
           <Button
             type="submit"
             customClass="w-full sm:max-w-[300px] justify-center py-2 md:py-3 text-lg sm:text-xl my-2"
-            disabled={isPending || !agreements.newsletter || !agreements.terms}
+            disabled={isSubmitting || !watchedNewsletter || !watchedTerms}
           >
-            {isPending ? 'Creating Account...' : 'Create Account'}
+            {isSubmitting ? 'Creating Account...' : 'Create Account'}
           </Button>
         </div>
       </form>
-
-      <p className="text-lg sm:text-xl text-Gray56 mt-6 sm:mt-8">
-        Already have an account?{' '}
-        <Link href={ROUTER.LOGIN} className="text-primary font-bold">
-          Log In
-        </Link>
-      </p>
     </>
   );
 };
