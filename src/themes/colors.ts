@@ -14,6 +14,7 @@ const colors = {
   cyanBlue: '#545559',
   darkGreen: '#3F861E',
   red: '#F50707',
+  lavender: '#E6EEF9',
 };
 
 export default colors;

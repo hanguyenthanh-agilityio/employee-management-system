@@ -21,6 +21,10 @@ import { triggerDownload } from '@/utils/download';
 // Types
 import { LeaveItem } from '@/types/components';
 
+// Constants
+import { ROUTER } from '@/constants/router';
+import { ERROR_MESSAGE } from '@/constants/error';
+
 const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   /**
    * searchParams: get query from URL
@@ -88,7 +92,7 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
   // Handle edit Leave Application
   const handleEdit = (id: string): (() => void) => {
     return () => {
-      router.push(`/leave-applications/${id}/edit`);
+      router.push(`${ROUTER.LEAVE_APPLICATION}/${id}${ROUTER.EDIT}`);
     };
   };
 
@@ -100,7 +104,7 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
 
         router.refresh();
       } catch (error) {
-        console.error('Delete failed', error);
+        console.error(ERROR_MESSAGE.DELETE_FAILED, error);
       }
     };
   };
@@ -116,7 +120,7 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
       const blob = await exportLeaveApplications(format);
       triggerDownload(blob, `leave_applications.${format}`);
     } catch (error) {
-      console.error('Export failed', error);
+      console.error(ERROR_MESSAGE.EXPORT_FAILED, error);
     }
   };
 

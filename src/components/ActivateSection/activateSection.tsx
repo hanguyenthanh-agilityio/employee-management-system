@@ -12,6 +12,9 @@ import { Button } from '@/components/Button';
 // Actions
 import { activateAction } from '@/actions/auth-action';
 
+// Constants
+import { ROUTER } from '@/constants/router';
+
 const ActivateSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -43,7 +46,7 @@ const ActivateSection = () => {
       setMessage(result.message);
 
       if (result.success) {
-        setTimeout(() => router.push('/login'), 3000);
+        setTimeout(() => router.push(ROUTER.LOGIN), 3000);
       }
     } catch (err) {
       setMessage(

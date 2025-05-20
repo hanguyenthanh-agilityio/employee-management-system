@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 
 // Constants
 import { ENDPOINT_LEAVE } from '@/constants/api-endpoint';
+import { ERROR_MESSAGE } from '@/constants/error';
 
 // Services
 import {
@@ -48,7 +49,7 @@ export const createLeaveApplication = async (formDataInput: FormData) => {
 
   const parsed = leaveApplicationSchema.safeParse(rawData);
   if (!parsed.success) {
-    throw new Error('Validation failed');
+    throw new Error(ERROR_MESSAGE.VALIDATION_FAILED);
   }
 
   await postLeaveApplication(formDataInput);
@@ -73,7 +74,7 @@ export const updateLeaveApplication = async (
 
   const parsed = leaveApplicationSchema.safeParse(rawData);
   if (!parsed.success) {
-    throw new Error('Validation failed');
+    throw new Error(ERROR_MESSAGE.VALIDATION_FAILED);
   }
 
   await patchLeaveApplication(id, formDataInput);

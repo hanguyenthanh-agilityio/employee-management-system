@@ -20,6 +20,10 @@ import { Button } from '@/components/Button';
 import { loginSchema } from '@/utils/schemas/authSchema';
 import { loginForm } from '@/utils/validate';
 
+// Constants
+import { ROUTER } from '@/constants/router';
+import { ERROR_MESSAGE } from '@/constants/error';
+
 const initialState = {
   success: false,
   message: '',
@@ -68,7 +72,7 @@ const validatedLoginAction = async (
 
     return {
       success: false,
-      message: 'Unknown error occurred.',
+      message: ERROR_MESSAGE.UNKNOWN,
       fieldErrors: {
         email: '',
         password: '',
@@ -86,7 +90,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (state.success) {
-      router.push('/leave-applications');
+      router.push(ROUTER.LEAVE_APPLICATION);
     }
   }, [state.success, router]);
 
@@ -167,7 +171,7 @@ const LoginForm = () => {
         <p className="text-center text-lg md:text-xl text-Gray56 mt-6">
           Don’t have an account yet?{' '}
           <Link
-            href="/register"
+            href={ROUTER.REGISTER}
             className="text-primary font-bold hover:underline"
           >
             Join KRIS today

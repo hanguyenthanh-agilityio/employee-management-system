@@ -9,6 +9,10 @@ import { activateAccount, login, register } from '@/services/apiService';
 import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
 import { loginForm, registerForm } from '@/utils/validate';
 
+// Constants
+import { ERROR_MESSAGE } from '@/constants/error';
+import { SUCCESS_MESSAGES } from '@/constants/success';
+
 /**
  * LOGIN ACTION
  * Get data from FormData
@@ -34,7 +38,7 @@ export const loginAction = async (_: unknown, formData: FormData) => {
     if (!data.access) {
       return {
         success: false,
-        message: data.message || 'Invalid credentials',
+        message: data.message || ERROR_MESSAGE.INVALID_CREDENTIALS,
       };
     }
 
@@ -58,9 +62,7 @@ export const loginAction = async (_: unknown, formData: FormData) => {
     return {
       success: false,
       message:
-        err instanceof Error
-          ? err.message
-          : 'Invalid credentials or server error',
+        err instanceof Error ? err.message : ERROR_MESSAGE.INVALID_CREDENTIALS,
     };
   }
 };
@@ -99,9 +101,7 @@ export const registerAction = async (_: unknown, formData: FormData) => {
 
     return {
       success: true,
-      message:
-        response.message ||
-        'Registration successful. Please check your email to activate your account.',
+      message: response.message || SUCCESS_MESSAGES.REGISTRATION_SUCCESS,
     };
   } catch (err: unknown) {
     console.error('Register error:', err);
@@ -109,9 +109,7 @@ export const registerAction = async (_: unknown, formData: FormData) => {
     return {
       success: false,
       message:
-        err instanceof Error
-          ? err.message
-          : 'Unknown error during registration',
+        err instanceof Error ? err.message : ERROR_MESSAGE.UNKNOWN_REGISTER,
     };
   }
 };

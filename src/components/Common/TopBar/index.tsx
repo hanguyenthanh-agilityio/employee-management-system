@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { startTransition } from 'react';
 
+// Constants
 import { useRouter } from 'next/navigation';
 
 // Icons
@@ -17,8 +18,9 @@ import {
 import { logoutAction } from '@/actions/auth-action';
 
 // Components
+import { ROUTER } from '@/constants/router';
 import TopBarNav from '../TopBarNav';
-import ProfileDropdown from '../../ProfileDropdown';
+import ProfileDropdown from '@/components/ProfileDropdown';
 
 const TopBar = () => {
   const router = useRouter();
@@ -27,7 +29,7 @@ const TopBar = () => {
   const handleLogout = () => {
     startTransition(async () => {
       await logoutAction();
-      router.replace('/login');
+      router.replace(ROUTER.LOGIN);
     });
   };
 

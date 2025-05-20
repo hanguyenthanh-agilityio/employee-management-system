@@ -5,6 +5,7 @@ import { useActionState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+// Zod
 import { ZodError } from 'zod';
 
 // Actions
@@ -12,12 +13,15 @@ import { registerAction } from '@/actions/auth-action';
 
 // Utils
 import { registerSchema } from '@/utils/schemas/authSchema';
+import { registerForm } from '@/utils/validate';
 
 // Components
 import { Button } from '@/components/Button';
 import Checkbox from '@/components/Common/Checkbox';
 import Input from '@/components/Common/Input';
-import { registerForm } from '@/utils/validate';
+
+// Constants
+import { ROUTER } from '@/constants/router';
 
 const inputFields = [
   { label: 'First Name', name: 'firstName' },
@@ -103,7 +107,7 @@ const RegisterPage = () => {
   );
   useEffect(() => {
     if (state.success) {
-      router.push('/login/');
+      router.push(ROUTER.LOGIN);
     }
   }, [state.success, router]);
 
@@ -166,7 +170,7 @@ const RegisterPage = () => {
 
       <p className="text-lg sm:text-xl text-Gray56 mt-6 sm:mt-8">
         Already have an account?{' '}
-        <Link href="/login" className="text-primary font-bold">
+        <Link href={ROUTER.LOGIN} className="text-primary font-bold">
           Log In
         </Link>
       </p>

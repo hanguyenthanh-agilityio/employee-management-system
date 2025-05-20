@@ -1,13 +1,14 @@
 // Constants
-import { API_URL, NEXT_PUBLIC_API_URL } from '@/constants/api_url';
-import { LoginInput, RegisterInput } from '@/utils/schemas/authSchema';
+import { API, API_URL, NEXT_PUBLIC_API_URL } from '@/constants/api_url';
+import { ERROR_MESSAGE } from '@/constants/error';
 
 // Utils
 import { getTokenFromCookies } from '@/utils/auth';
+import { LoginInput, RegisterInput } from '@/utils/schemas/authSchema';
 
 // Fetch API Login
 export const login = async (data: LoginInput) => {
-  const res = await fetch(`${API_URL}/accounts/login/`, {
+  const res = await fetch(`${API_URL}${API.LOGIN}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -18,7 +19,7 @@ export const login = async (data: LoginInput) => {
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.message || 'Login failed');
+    throw new Error(errorData.message || ERROR_MESSAGE.LOGIN_FAILED);
   }
 
   return res.json();
@@ -26,7 +27,7 @@ export const login = async (data: LoginInput) => {
 
 // Fetch API Register
 export const register = async (data: RegisterInput) => {
-  const res = await fetch(`${API_URL}/accounts/register/`, {
+  const res = await fetch(`${API_URL}${API.REGISTER}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ export const register = async (data: RegisterInput) => {
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.message || 'Register failed');
+    throw new Error(errorData.message || ERROR_MESSAGE.REGISTER_FAILED);
   }
 
   return res.json();
@@ -46,7 +47,7 @@ export const register = async (data: RegisterInput) => {
 // Fetch API Activate Account
 export const activateAccount = async (uid: string, token: string) => {
   const res = await fetch(
-    `${NEXT_PUBLIC_API_URL}/accounts/activate/${uid}/${token}/`,
+    `${NEXT_PUBLIC_API_URL}${API.ACTIVATE}${uid}/${token}/`,
     {
       method: 'GET',
       headers: {
@@ -60,7 +61,7 @@ export const activateAccount = async (uid: string, token: string) => {
   if (!res.ok) {
     if (contentType?.includes('application/json')) {
       const errorData = await res.json();
-      throw new Error(errorData.message || 'Activation failed');
+      throw new Error(errorData.message || ERROR_MESSAGE.ACTIVATION_FAILED);
     } else {
       const errorText = await res.text();
       throw new Error(
@@ -80,7 +81,7 @@ export const activateAccount = async (uid: string, token: string) => {
 export const getLeaveApplications = async () => {
   const token = await getTokenFromCookies();
 
-  const res = await fetch(`${API_URL}/leave-applications/`, {
+  const res = await fetch(`${API_URL}${API.BASE}`, {
     method: 'GET',
     next: { revalidate: 60 },
     headers: {
@@ -100,7 +101,7 @@ export const getLeaveApplications = async () => {
 export const getLeaveApplicationById = async (id: string) => {
   const token = await getTokenFromCookies();
 
-  const res = await fetch(`${API_URL}/leave-applications/${id}`, {
+  const res = await fetch(`${API_URL}${API.BASE}${id}`, {
     method: 'GET',
     next: { revalidate: 60 },
     headers: {
@@ -120,7 +121,7 @@ export const getLeaveApplicationById = async (id: string) => {
 export const postLeaveApplication = async (formData: FormData) => {
   const token = await getTokenFromCookies();
 
-  const res = await fetch(`${API_URL}/leave-applications/`, {
+  const res = await fetch(`${API_URL}${API.BASE}`, {
     method: 'POST',
     next: { revalidate: 60 },
     headers: {
@@ -141,7 +142,7 @@ export const postLeaveApplication = async (formData: FormData) => {
 export const patchLeaveApplication = async (id: string, formData: FormData) => {
   const token = await getTokenFromCookies();
 
-  const res = await fetch(`${API_URL}/leave-applications/${id}/`, {
+  const res = await fetch(`${API_URL}${API.BASE}${id}/`, {
     method: 'PATCH',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -161,7 +162,7 @@ export const patchLeaveApplication = async (id: string, formData: FormData) => {
 export const deleteLeave = async (id: string) => {
   const token = await getTokenFromCookies();
 
-  const res = await fetch(`${API_URL}/leave-applications/${id}/`, {
+  const res = await fetch(`${API_URL}${API.BASE}${id}/`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -192,7 +193,7 @@ export const exportLeave = async (
 
   console.log('Calling export API:', format);
 
-  const res = await fetch(`${API_URL}/leave-applications/download/${format}/`, {
+  const res = await fetch(`${API_URL}${API.DOWNLOAD}${format}/`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
