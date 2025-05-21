@@ -1,7 +1,12 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
+
+// Icons
 import { ChevronDownIcon } from '@heroicons/react/16/solid';
+
+// Hooks
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface DropdownAction {
   label: string;
@@ -23,11 +28,14 @@ const Dropdown = ({
   icon,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
+  useClickOutside(ref, () => setIsOpen(false));
+
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left" ref={ref}>
       <button
         onClick={toggleDropdown}
         className={`flex items-center ${buttonClassName}`}

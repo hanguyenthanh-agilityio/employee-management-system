@@ -29,7 +29,7 @@ const GenericTable = <T,>({
   pagination,
 }: GenericTableProps<T>) => {
   return (
-    <div className="overflow-x-auto w-full">
+    <div className="overflow-x-auto w-full pb-24">
       <table className="min-w-full bg-white rounded-lg shadow-sm text-sm md:text-base">
         <thead className="bg-[#E3EDF9] text-black font-bold">
           <tr>

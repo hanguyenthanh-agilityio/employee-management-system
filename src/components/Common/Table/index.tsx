@@ -3,7 +3,7 @@ interface TableProps {
   rows: (string | number)[][];
 }
 
-export default function Table({ headers, rows }: TableProps) {
+const Table = ({ headers, rows }: TableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-xl text-left text-cyanBlue min-w-[500px] border-separate border-spacing-y-3">
@@ -33,4 +33,6 @@ export default function Table({ headers, rows }: TableProps) {
       </table>
     </div>
   );
-}
+};
+
+export default Table;

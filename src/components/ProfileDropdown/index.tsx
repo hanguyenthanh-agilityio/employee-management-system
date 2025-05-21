@@ -1,9 +1,15 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { UserCircleIcon } from '@heroicons/react/24/solid';
+import { useState, useRef } from 'react';
+
 import Link from 'next/link';
+
+// Icons
+import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { UserIcon } from '@heroicons/react/24/outline';
+
+// Hooks
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface ProfileDropdownProps {
   onClick: () => void;
@@ -13,15 +19,7 @@ const ProfileDropdown = ({ onClick }: ProfileDropdownProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  useClickOutside(ref, () => setOpen(false));
 
   const handleClick = () => {
     setOpen((prev) => !prev);
