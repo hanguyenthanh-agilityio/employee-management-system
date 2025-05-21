@@ -148,6 +148,7 @@ const LeaveHistorySection = ({ data }: { data: LeaveItem[] }) => {
     {
       title: 'Reason(s)',
       render: (row: LeaveItem) => row.reason,
+      className: ' truncate max-w-40',
     },
     {
       title: 'Actions',
