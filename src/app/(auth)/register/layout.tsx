@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Image from 'next/image';
+import ToastProvider from '@/components/ToastProvider';
 
 const RegisterLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -39,6 +40,7 @@ const RegisterLayout = ({ children }: { children: ReactNode }) => {
       {/* Form Second */}
       <div className="flex flex-col justify-center px-6 sm:px-10 py-10 md:py-16">
         {children}
+        <ToastProvider />
       </div>
     </main>
   );

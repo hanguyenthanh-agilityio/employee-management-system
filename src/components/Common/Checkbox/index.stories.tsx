@@ -16,7 +16,6 @@ const meta = {
     id: { control: 'text' },
     name: { control: 'text' },
     className: { control: 'text' },
-    subClassName: { control: 'text' },
   },
   args: {
     id: 'checkbox-1',

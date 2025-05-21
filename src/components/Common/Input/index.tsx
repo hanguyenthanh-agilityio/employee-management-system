@@ -1,34 +1,30 @@
-import { InputHTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 
-interface InputPros extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  name?: string;
   labelClassName?: string;
   inputClassName?: string;
   icon?: ReactNode;
 }
 
-const Input = ({
-  label,
-  name,
-  labelClassName,
-  inputClassName,
-  icon,
-  ...props
-}: InputPros) => {
-  return (
-    <div>
-      <label className={labelClassName}>
-        {label}
-        {icon}
-      </label>
-      <input
-        {...props}
-        className={`w-full border-[2px] border-mediumLightGray ${inputClassName}`}
-        name={name}
-      />
-    </div>
-  );
-};
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ label, labelClassName, inputClassName, icon, ...props }, ref) => {
+    return (
+      <div>
+        <label className={labelClassName}>
+          {label}
+          {icon}
+        </label>
+        <input
+          {...props}
+          ref={ref}
+          className={`w-full border-[2px] border-mediumLightGray rounded-md ${inputClassName}`}
+        />
+      </div>
+    );
+  },
+);
+
+Input.displayName = 'Input';
 
 export default Input;

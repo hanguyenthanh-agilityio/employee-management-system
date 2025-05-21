@@ -6,8 +6,11 @@ import { cookies } from 'next/headers';
 import { activateAccount, login, register } from '@/services/apiService';
 
 // Utils
-import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
-import { loginForm, registerForm } from '@/utils/validate';
+import {
+  LoginInput,
+  loginSchema,
+  RegisterInput,
+} from '@/utils/schemas/authSchema';
 
 // Constants
 import { ERROR_MESSAGE } from '@/constants/error';
@@ -20,8 +23,8 @@ import { SUCCESS_MESSAGES } from '@/constants/success';
  * Call API /account/login/
  * Save access token in Cookie
  */
-export const loginAction = async (_: unknown, formData: FormData) => {
-  const fields = loginForm(formData);
+export const loginAction = async (_: unknown, formData: LoginInput) => {
+  const fields = formData;
 
   const parsed = loginSchema.safeParse(fields);
 
@@ -82,22 +85,9 @@ export const logoutAction = async () => {
 };
 
 // Register action
-export const registerAction = async (_: unknown, formData: FormData) => {
-  console.log('Form values:', Object.fromEntries(formData.entries()));
-
-  const fields = registerForm(formData);
-
-  const parsed = registerSchema.safeParse(fields);
-
-  if (!parsed.success) {
-    return {
-      success: false,
-      message: parsed.error.errors.map((e) => e.message).join(', '),
-    };
-  }
-
+export const registerAction = async (data: RegisterInput) => {
   try {
-    const response = await register(parsed.data);
+    const response = await register(data);
 
     return {
       success: true,
