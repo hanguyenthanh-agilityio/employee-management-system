@@ -7,24 +7,12 @@ import { ROUTER } from '@/constants/router';
 import {
   LinkWithIcon,
   type LinkWithIconProps,
-} from '@/components/LinkWithIcon';
+} from '@/components/Common/LinkWithIcon';
 
 // Icons
-import { BoltIcon, CubeIcon, BugAntIcon, UserIcon } from '@/icons';
+import { BoltIcon, UserIcon } from '@/icons';
 
 const NAVIGATION_ITEMS: LinkWithIconProps[] = [
-  {
-    url: ROUTER.CATEGORY,
-    text: 'Category',
-    title: 'Category Listing',
-    icon: <CubeIcon customClass="w-4 h-4 mr-2" />,
-  },
-  {
-    url: `${ROUTER.CATEGORY}?showError=true`,
-    text: 'Error Page',
-    title: 'Demo Error Page',
-    icon: <BugAntIcon customClass="w-4 h-4 mr-2" />,
-  },
   {
     url: ROUTER.LOGIN,
     text: 'Login',

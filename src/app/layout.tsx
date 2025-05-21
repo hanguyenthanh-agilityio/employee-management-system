@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 
 // Components
 import './globals.css';
+import ToastProvider from '@/components/ToastProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: 'icon',
-      url: '/favicon.ico',
+      url: '/team-management.png',
     },
   ],
 };
@@ -24,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children} <ToastProvider />
+      </body>
     </html>
   );
 }

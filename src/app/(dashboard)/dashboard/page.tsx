@@ -1,9 +1,10 @@
-import Header from '@/components/Header';
-import ProfileSection from './components/ProfileSection';
-import QuickActions from './components/QuickActions';
-import LeaveSection from './components/LeaveSection';
-import BirthdaySection from './components/BirthdaySection';
-import PaySlipSection from './components/PaySlipSection';
+// Components
+import BirthdaySection from '@/components/BirthdaySection';
+import Header from '@/components/Common/Header';
+import LeaveSection from '@/components/LeaveSection';
+import PaySlipSection from '@/components/PaySlipSection';
+import ProfileSection from '@/components/ProfileSection';
+import QuickActions from '@/components/QuickActions';
 
 const DashboardPage = () => (
   <section className="flex flex-col gap-12">

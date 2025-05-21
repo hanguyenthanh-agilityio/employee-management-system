@@ -6,8 +6,15 @@ import { cookies } from 'next/headers';
 import { activateAccount, login, register } from '@/services/apiService';
 
 // Utils
-import { loginSchema, registerSchema } from '@/utils/schemas/authSchema';
-import { loginForm, registerForm } from '@/utils/validate';
+import {
+  LoginInput,
+  loginSchema,
+  RegisterInput,
+} from '@/utils/schemas/authSchema';
+
+// Constants
+import { ERROR_MESSAGE } from '@/constants/error';
+import { SUCCESS_MESSAGES } from '@/constants/success';
 
 /**
  * LOGIN ACTION
@@ -16,8 +23,8 @@ import { loginForm, registerForm } from '@/utils/validate';
  * Call API /account/login/
  * Save access token in Cookie
  */
-export const loginAction = async (_: unknown, formData: FormData) => {
-  const fields = loginForm(formData);
+export const loginAction = async (_: unknown, formData: LoginInput) => {
+  const fields = formData;
 
   const parsed = loginSchema.safeParse(fields);
 
@@ -34,7 +41,7 @@ export const loginAction = async (_: unknown, formData: FormData) => {
     if (!data.access) {
       return {
         success: false,
-        message: data.message || 'Invalid credentials',
+        message: data.message || ERROR_MESSAGE.INVALID_CREDENTIALS,
       };
     }
 
@@ -58,9 +65,7 @@ export const loginAction = async (_: unknown, formData: FormData) => {
     return {
       success: false,
       message:
-        err instanceof Error
-          ? err.message
-          : 'Invalid credentials or server error',
+        err instanceof Error ? err.message : ERROR_MESSAGE.INVALID_CREDENTIALS,
     };
   }
 };
@@ -80,28 +85,13 @@ export const logoutAction = async () => {
 };
 
 // Register action
-export const registerAction = async (_: unknown, formData: FormData) => {
-  console.log('Form values:', Object.fromEntries(formData.entries()));
-
-  const fields = registerForm(formData);
-
-  const parsed = registerSchema.safeParse(fields);
-
-  if (!parsed.success) {
-    return {
-      success: false,
-      message: parsed.error.errors.map((e) => e.message).join(', '),
-    };
-  }
-
+export const registerAction = async (data: RegisterInput) => {
   try {
-    const response = await register(parsed.data);
+    const response = await register(data);
 
     return {
       success: true,
-      message:
-        response.message ||
-        'Registration successful. Please check your email to activate your account.',
+      message: response.message || SUCCESS_MESSAGES.REGISTRATION_SUCCESS,
     };
   } catch (err: unknown) {
     console.error('Register error:', err);
@@ -109,9 +99,7 @@ export const registerAction = async (_: unknown, formData: FormData) => {
     return {
       success: false,
       message:
-        err instanceof Error
-          ? err.message
-          : 'Unknown error during registration',
+        err instanceof Error ? err.message : ERROR_MESSAGE.UNKNOWN_REGISTER,
     };
   }
 };

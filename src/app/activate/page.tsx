@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
-import ActivateSection from './activateSection';
+
+// Components
+import ActivateSection from '@/components/ActivateSection/activateSection';
 
 const ActivatePage = () => {
   return (

@@ -1,4 +1,6 @@
 export const ROUTER = {
-  CATEGORY: '/category',
   LOGIN: '/login',
+  REGISTER: '/register',
+  LEAVE_APPLICATION: '/leave-applications',
+  EDIT: '/edit',
 };

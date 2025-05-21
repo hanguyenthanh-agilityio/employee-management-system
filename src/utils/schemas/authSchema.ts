@@ -13,31 +13,22 @@ export type LoginInput = z.infer<typeof loginSchema>;
 
 export const registerSchema = z
   .object({
-    email: z.string().email({
-      message: 'Invalid email',
+    firstName: z.string().min(1, 'First name is required'),
+    lastName: z.string().min(1, 'Last name is required'),
+    email: z.string().email('Invalid email'),
+    phone: z.string().min(1, 'Phone is required'),
+    password: z.string().min(6, 'Password must be 6+ chars'),
+    confirmPassword: z.string(),
+    newsletter: z.boolean().refine((val) => val === true, {
+      message: 'You must agree to receive newsletter',
     }),
-    username: z.string().min(3),
-    firstName: z.string().min(1, {
-      message: 'First name is required',
+    terms: z.boolean().refine((val) => val === true, {
+      message: 'You must agree to terms and privacy',
     }),
-    lastName: z.string().min(1, {
-      message: 'Last name is required',
-    }),
-    phone: z.string().min(6, {
-      message: 'Phone number is required',
-    }),
-    password: z.string().min(6, {
-      message: 'Password must be at least 6 characters',
-    }),
-    confirmPassword: z.string().min(6, {
-      message: 'Confirm Password is required',
-    }),
-    role: z.enum(['admin', 'user']),
-    isReceiveNewsletters: z.boolean(),
   })
   .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
     path: ['confirmPassword'],
-    message: 'Passwords do not match',
   });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
