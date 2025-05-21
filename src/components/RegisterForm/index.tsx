@@ -10,8 +10,10 @@ import { ROUTER } from '@/constants/router';
 
 import Input from '@/components/Common/Input';
 import Checkbox from '@/components/Common/Checkbox';
-import { Button } from '@/components/Button';
+import { Button } from '@/components/Common/Button';
 import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { ERROR_MESSAGE } from '@/constants/error';
 
 const inputFields = [
   { label: 'First Name', name: 'firstName' },
@@ -38,6 +40,7 @@ const checkboxes = [
 
 const RegisterForm = () => {
   const router = useRouter();
+  const [serverError, setServerError] = useState('');
 
   const {
     register,
@@ -52,12 +55,15 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (data: RegisterInput) => {
+    setServerError('');
+
     const result = await registerAction(data);
     if (result.success) {
       toast.success('Account created successfully!');
       router.push(ROUTER.LOGIN);
     } else {
-      toast.error(result.message || 'Registration failed.');
+      setServerError(result.message || ERROR_MESSAGE.REGISTER_FAILED);
+      toast.error(result.message || ERROR_MESSAGE.REGISTER_FAILED);
     }
   };
 
@@ -108,6 +114,12 @@ const RegisterForm = () => {
             </div>
           ))}
         </div>
+
+        {serverError && (
+          <div className="text-red text-center text-lg font-medium">
+            {serverError}
+          </div>
+        )}
 
         <div className="col-span-1 md:col-span-2">
           <Button

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 
 // Components
-import { Button } from '@/components/Button';
+import { Button } from '@/components/Common/Button';
 
 // Actions
 import { activateAction } from '@/actions/auth-action';

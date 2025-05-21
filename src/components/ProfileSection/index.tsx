@@ -1,4 +1,4 @@
-import { Button } from '@/components/Button';
+import { Button } from '@/components/Common/Button';
 import Image from 'next/image';
 
 interface ProfileSectionProps {

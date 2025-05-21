@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
 // Components
-import { Button } from './index';
+import { Button } from '.';
+
 import { UserIcon } from '@/icons';
 
 const meta = {

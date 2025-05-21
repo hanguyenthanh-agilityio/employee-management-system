@@ -2,7 +2,7 @@
 
 import Input from '../Input';
 // import Select from '../Select';
-import { Button } from '../../Button';
+import { Button } from '../Button';
 import { LeaveItem } from '@/types/components';
 
 const Form = ({
